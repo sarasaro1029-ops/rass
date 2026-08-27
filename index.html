@@ -90,7 +90,7 @@
         .user-badge { display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; font-weight: bold; background: var(--main-light) !important; border: 1px solid var(--main-color); }
 
         .video-timer-container {
-            position: relative; width: 100%; height: 440px; border-radius: var(--radius-lg); overflow: hidden;
+            position: relative; width: 100%; height: 460px; border-radius: var(--radius-lg); overflow: hidden;
             background: var(--main-light); box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
             border: 2px solid var(--main-color);
         }
@@ -100,9 +100,9 @@
         
         .timer-overlay-clean {
             position: relative; z-index: 10; text-align: center; color: var(--text-dark);
-            display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; height: 100%; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; gap: 0.8rem; width: 100%; height: 100%; justify-content: center;
         }
-        .timer-overlay-clean .timer-display { font-size: 4.5rem; font-weight: 700; line-height: 1; letter-spacing: 2px; color: var(--text-dark); }
+        .timer-overlay-clean .timer-display { font-size: 4rem; font-weight: 700; line-height: 1; letter-spacing: 2px; color: var(--text-dark); }
 
         .fullscreen-icon-btn {
             position: absolute; top: 15px; left: 15px; background: var(--white); border: 1px solid var(--main-color);
@@ -113,14 +113,14 @@
 
         .select-task-dropdown {
             background: var(--white); color: var(--text-dark); border: 1px solid var(--main-color);
-            padding: 0.6rem 1.2rem; border-radius: 20px; outline: none; font-size: 0.95rem; font-weight: bold;
+            padding: 0.5rem 1rem; border-radius: 20px; outline: none; font-size: 0.9rem; font-weight: bold;
             cursor: pointer; width: 280px; text-align: center;
         }
         .select-task-dropdown option { background: var(--white); color: var(--text-dark); }
 
         .round-counter-badge {
-            font-size: 0.85rem; font-weight: bold; background: var(--white); color: var(--text-dark);
-            padding: 0.3rem 0.9rem; border-radius: 15px; border: 1px solid var(--main-color);
+            font-size: 0.8rem; font-weight: bold; background: var(--white); color: var(--text-dark);
+            padding: 0.2rem 0.8rem; border-radius: 15px; border: 1px solid var(--main-color);
         }
         
         .ambience-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; align-items: center; }
@@ -488,9 +488,10 @@
                         <span id="nursingRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
                     <div class="timer-display" id="nursingTimer">00:25:00</div>
-                    <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="nursingStartBtn" onclick="togglePomodoro('nursing')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('nursing')">إعادة ضبط</button>
+                    <div style="display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center;">
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1rem; padding:0.6rem 1.5rem;" id="nursingStartBtn" onclick="togglePomodoro('nursing')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:#00B894; color:white; font-size:0.9rem; padding:0.6rem 1.2rem;" onclick="finishAndSaveSession('nursing')">💾 إنهاء وحفظ الوقت (كـ إنجاز)</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:0.9rem; border:1px solid var(--main-color); padding:0.6rem 1rem;" onclick="resetPomodoro('nursing')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
@@ -582,9 +583,10 @@
                         <span id="dentistryRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
                     <div class="timer-display" id="dentistryTimer">00:25:00</div>
-                    <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="dentistryStartBtn" onclick="togglePomodoro('dentistry')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('dentistry')">إعادة ضبط</button>
+                    <div style="display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center;">
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1rem; padding:0.6rem 1.5rem;" id="dentistryStartBtn" onclick="togglePomodoro('dentistry')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:#00B894; color:white; font-size:0.9rem; padding:0.6rem 1.2rem;" onclick="finishAndSaveSession('dentistry')">💾 إنهاء وحفظ الوقت (كـ إنجاز)</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:0.9rem; border:1px solid var(--main-color); padding:0.6rem 1rem;" onclick="resetPomodoro('dentistry')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
@@ -676,9 +678,10 @@
                         <span id="architectureRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
                     <div class="timer-display" id="architectureTimer">00:45:00</div>
-                    <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="architectureStartBtn" onclick="togglePomodoro('architecture')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('architecture')">إعادة ضبط</button>
+                    <div style="display:flex; gap:0.8rem; flex-wrap:wrap; justify-content:center;">
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1rem; padding:0.6rem 1.5rem;" id="architectureStartBtn" onclick="togglePomodoro('architecture')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:#00B894; color:white; font-size:0.9rem; padding:0.6rem 1.2rem;" onclick="finishAndSaveSession('architecture')">💾 إنهاء وحفظ الوقت (كـ إنجاز)</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:0.9rem; border:1px solid var(--main-color); padding:0.6rem 1rem;" onclick="resetPomodoro('architecture')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
@@ -904,7 +907,6 @@
             razan: []
         };
 
-        // نظام توليد الأصوات التنبيهية بالـ Web Audio API (بدون الحاجة لملفات خارجية)
         function playAlarmSound(type) {
             try {
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -916,21 +918,21 @@
 
                 if (type === 'bell') {
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime);
                     gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 1.5);
                 } else if (type === 'chime') {
                     osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
-                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.2); // E5
-                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.4); // G5
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.2);
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.4);
                     gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
                     gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
                     osc.start();
                     osc.stop(audioCtx.currentTime + 1.2);
-                } else { // beep (default)
+                } else {
                     osc.type = 'square';
                     osc.frequency.setValueAtTime(440, audioCtx.currentTime);
                     gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
@@ -945,7 +947,7 @@
 
         window.changeAlarmSound = function(domain, soundType) {
             pomodoroTimers[domain].alarmSound = soundType;
-            playAlarmSound(soundType); // معاينة الصوت فوراً عند الاختيار
+            playAlarmSound(soundType);
         }
 
         window.addExamForUser = function(userKey) {
@@ -1289,9 +1291,9 @@
         }
 
         const pomodoroTimers = {
-            nursing: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
-            dentistry: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
-            architecture: { workMins: 45, breakMins: 10, longBreakMins: 20, roundsTarget: 4, currentRound: 1, seconds: 45 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' }
+            nursing: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, initialSeconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
+            dentistry: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, initialSeconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
+            architecture: { workMins: 45, breakMins: 10, longBreakMins: 20, roundsTarget: 4, currentRound: 1, seconds: 45 * 60, initialSeconds: 45 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' }
         };
 
         function applyCustomPomodoro(domain) {
@@ -1304,6 +1306,7 @@
             p.roundsTarget = parseInt(document.getElementById(domain + 'RoundsTarget')?.value) || 4;
             p.mode = 'work';
             p.seconds = p.workMins * 60;
+            p.initialSeconds = p.seconds;
             updatePomodoroUI(domain);
         }
 
@@ -1313,6 +1316,7 @@
             document.getElementById(domain + 'StartBtn').innerText = 'بدء الجلسة';
             p.mode = 'shortBreak';
             p.seconds = mins * 60;
+            p.initialSeconds = p.seconds;
             updatePomodoroUI(domain);
             alert(`☕ تم تفعيل استراحة سريعة لمدة ${mins} دقائق! خذي قسطاً من الراحة.`);
         }
@@ -1368,7 +1372,6 @@
                         btn.innerText = 'بدء الجلسة';
                         if(vid) vid.pause();
 
-                        // تشغيل صوت التنبيه المختار عند انتهاء أي تايمر (تركيز أو بريك)
                         playAlarmSound(p.alarmSound);
 
                         if (p.mode === 'work') {
@@ -1384,6 +1387,7 @@
                             alert('انتهت فترة الاستراحة! ☕ استعدي للجولة الجديدة.');
                             p.mode = 'work'; p.seconds = p.workMins * 60;
                         }
+                        p.initialSeconds = p.seconds;
                         updatePomodoroUI(domain);
                     }
                 }, 1000);
@@ -1395,10 +1399,44 @@
             }
         }
 
-        function resetPomodoro(domain) { 
-            applyCustomPomodoro(domain); 
+        // دالة جديدة لحساب الوقت المنقضي وحفظه كإنجاز فور الإيقاف المبكر
+        window.finishAndSaveSession = function(domain) {
+            const p = pomodoroTimers[domain];
+            clearInterval(p.interval); 
+            p.running = false;
+            document.getElementById(domain + 'StartBtn').innerText = 'بدء الجلسة';
+
             const vid = document.getElementById(domain + 'VideoPlayer');
             if(vid) { vid.pause(); vid.currentTime = 0; }
+            document.getElementById('livePomodoroSection').style.display = 'none';
+
+            // حساب الثواني اللي ذاكرتها فعلياً
+            const elapsedSeconds = p.initialSeconds - p.seconds;
+            const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+
+            if (elapsedMinutes > 0 && p.mode === 'work') {
+                const taskSelect = document.getElementById(domain + 'TaskSelect');
+                const taskName = taskSelect ? taskSelect.options[taskSelect.selectedIndex].text : 'مذاكرة';
+                logCompletedSession(domain, elapsedMinutes, taskName);
+                alert(`✨ ممتاز يا سارة! تم حساب حفظ ${elapsedMinutes} دقيقة مذاكرة في رصيدك وإنجازاتك بنجاح.`);
+            } else {
+                alert('⚠️ لم تكملي وقتاً كافياً (أقل من دقيقة) لاحتسابه كإنجاز في هذا التايمر.');
+            }
+
+            // إعادة ضبط التايمر للبداية
+            p.seconds = p.initialSeconds;
+            updatePomodoroUI(domain);
+        }
+
+        function resetPomodoro(domain) { 
+            const p = pomodoroTimers[domain];
+            clearInterval(p.interval); p.running = false;
+            document.getElementById(domain + 'StartBtn').innerText = 'بدء الجلسة';
+            p.seconds = p.initialSeconds;
+            updatePomodoroUI(domain);
+            const vid = document.getElementById(domain + 'VideoPlayer');
+            if(vid) { vid.pause(); vid.currentTime = 0; }
+            document.getElementById('livePomodoroSection').style.display = 'none';
         }
 
         async function logCompletedSession(domain, mins, taskTitle) {
