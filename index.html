@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAS Platform | منصة التحدي التفاعلية الخارقة</title>
+    <title>RAS Platform |   يارب امتياز</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
@@ -242,6 +242,18 @@
                 </div>
             </div>
 
+            <!-- حالة الصديقات (Online / Offline) -->
+            <section class="card-box">
+                <h3><i class="lni lni-users"></i> حالة الصديقات (Online / Offline)</h3>
+                <div style="display:flex; gap:1.5rem;" id="friendsOnlineContainer"></div>
+            </section>
+
+            <!-- الورد والروتين اليومي (مشترك للجميع) - تم نقله هنا تحت حالة الصديقات مباشرة -->
+            <section class="card-box">
+                <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
+                <div class="habits-grid" id="habitsContainer"></div>
+            </section>
+
             <!-- سجل الإنجاز الأسبوعي والسنوي -->
             <section class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
                 <h3><i class="lni lni-calendar"></i> سجل الإنجاز الأسبوعي والسنوي 📊</h3>
@@ -286,16 +298,6 @@
                         <!-- يتم جلب حدائق الصديقات هنا عبر Firebase -->
                     </div>
                 </div>
-            </section>
-
-            <section class="card-box">
-                <h3><i class="lni lni-users"></i> حالة الصديقات (Online / Offline)</h3>
-                <div style="display:flex; gap:1.5rem;" id="friendsOnlineContainer"></div>
-            </section>
-
-            <section class="card-box">
-                <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
-                <div class="habits-grid" id="habitsContainer"></div>
             </section>
 
             <section class="grid-2col">
@@ -423,7 +425,7 @@
             <div class="video-timer-container" id="nursingContainer">
                 <button class="fullscreen-icon-btn" onclick="toggleFullscreen('nursingContainer')" title="تكبير الشاشة">⛶</button>
                 <video id="nursingVideoPlayer" autoplay loop muted style="display:none;"></video>
-                <iframe id="nursingAmbienceIframe" src="https://www.youtube.com/embed/mPZkdNFkNps?autoplay=1&mute=1&loop=1&playlist=mPZkdNFkNps" allow="autoplay; encrypted-media"></iframe>
+                <iframe id="nursingAmbienceIframe" src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A" allow="autoplay; encrypted-media"></iframe>
                 <div class="timer-overlay-clean">
                     <select id="nursingTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
                     <div style="display:flex; gap:0.6rem; align-items:center;">
@@ -441,9 +443,9 @@
             <div class="card-box">
                 <div class="ambience-controls">
                     <button class="ambience-btn" onclick="triggerVideoUpload('nursing')">📁 رفع فيديو</button>
-                    <button class="ambience-btn" onclick="setAmbience('nursing', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('nursing', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('nursing', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
-                    <button class="ambience-btn" onclick="setAmbience('nursing', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <button class="ambience-btn" onclick="setAmbience('nursing', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
                     <div style="display:flex; gap:0.3rem; flex:1;">
                         <input type="text" id="nursingYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
                         <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('nursing')">تشغيل</button>
@@ -521,9 +523,9 @@
             <div class="card-box">
                 <div class="ambience-controls">
                     <button class="ambience-btn" onclick="triggerVideoUpload('dentistry')">📁 رفع فيديو</button>
-                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('dentistry', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('dentistry', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
-                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
                     <div style="display:flex; gap:0.3rem; flex:1;">
                         <input type="text" id="dentistryYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
                         <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('dentistry')">تشغيل</button>
@@ -583,7 +585,7 @@
             <div class="video-timer-container" id="architectureContainer">
                 <button class="fullscreen-icon-btn" onclick="toggleFullscreen('architectureContainer')" title="تكبير الشاشة">⛶</button>
                 <video id="architectureVideoPlayer" autoplay loop muted style="display:none;"></video>
-                <iframe id="architectureAmbienceIframe" src="https://www.youtube.com/embed/eKFTSSKCzWA?autoplay=1&mute=1&loop=1&playlist=eKFTSSKCzWA" allow="autoplay; encrypted-media"></iframe>
+                <iframe id="architectureAmbienceIframe" src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&loop=1&playlist=L_LUpnjgPso" allow="autoplay; encrypted-media"></iframe>
                 <div class="timer-overlay-clean">
                     <select id="architectureTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
                     <div style="display:flex; gap:0.6rem; align-items:center;">
@@ -601,9 +603,9 @@
             <div class="card-box">
                 <div class="ambience-controls">
                     <button class="ambience-btn" onclick="triggerVideoUpload('architecture')">📁 رفع فيديو</button>
-                    <button class="ambience-btn" onclick="setAmbience('architecture', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('architecture', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('architecture', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
-                    <button class="ambience-btn" onclick="setAmbience('architecture', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <button class="ambience-btn" onclick="setAmbience('architecture', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
                     <div style="display:flex; gap:0.3rem; flex:1;">
                         <input type="text" id="architectureYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
                         <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('architecture')">تشغيل</button>
