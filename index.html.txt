@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAS Platform | يارب امتياز   </title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #FAF8F6;
+            --main-color: #FAD4D8;
+            --main-light: rgba(250, 212, 216, 0.35);
+            --text-dark: #4A4E69;
+            --text-muted: #6C757D;
+            --white: #FFFFFF;
+            --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.04);
+            --radius-lg: 20px;
+            --radius-md: 12px;
+        }
+
+        .dark-mode {
+            --bg-color: #12121E;
+            --main-color: #4A4565;
+            --main-light: rgba(74, 69, 101, 0.35);
+            --text-dark: #E0E0E0;
+            --text-muted: #A0A0A0;
+            --white: #1E1E2E;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Tajawal', sans-serif; transition: background-color 0.3s ease, color 0.3s ease; }
+        body { background-color: var(--bg-color); color: var(--text-dark); display: flex; min-height: 100vh; overflow-x: hidden; border-bottom: 6px solid var(--main-color); }
+
+        .overlay-screen {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(74, 78, 105, 0.85); backdrop-filter: blur(5px);
+            display: flex; align-items: center; justify-content: center; z-index: 1000;
+        }
+        .auth-card {
+            background: var(--white); padding: 2.5rem; border-radius: var(--radius-lg);
+            width: 380px; text-align: center; box-shadow: var(--shadow-soft); display: flex; flex-direction: column; gap: 1.5rem;
+            align-items: center;
+        }
+        .google-btn-single {
+            background: #4285F4; color: white; border: none; padding: 1rem 1.5rem;
+            border-radius: 30px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.8rem; font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3); transition: 0.3s; width: 100%;
+        }
+        .google-btn-single:hover { background: #3367D6; }
+
+        .role-btn {
+            width: 100%; padding: 1rem; border-radius: var(--radius-md); border: 2px solid var(--main-color);
+            background: var(--main-light); font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-dark);
+        }
+        .role-btn:hover { background: var(--main-color); transform: translateY(-2px); }
+
+        aside {
+            width: 270px; background: var(--white); border-left: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: var(--shadow-soft); order: 2;
+        }
+        .brand-logo { font-size: 1.8rem; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
+        .brand-logo span { width: 12px; height: 12px; background: var(--main-color); border-radius: 50%; }
+
+        .nav-menu { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .nav-item {
+            padding: 0.8rem 1rem; border-radius: var(--radius-md); cursor: pointer;
+            display: flex; align-items: center; gap: 0.8rem; font-weight: 500; transition: 0.3s; color: var(--text-muted);
+        }
+        .nav-item:hover, .nav-item.active { background-color: var(--main-light); color: var(--text-dark); border-right: 4px solid var(--main-color); }
+
+        .theme-selector-box {
+            background: var(--main-light); border: 1px solid var(--main-color); padding: 1rem; border-radius: var(--radius-md);
+            display: flex; flex-direction: column; gap: 0.8rem; margin-top: auto;
+        }
+        .theme-selector-box h4 { font-size: 0.85rem; color: var(--text-dark); display: flex; align-items: center; gap: 0.4rem; }
+        .color-picker-wrapper { display: flex; align-items: center; gap: 0.8rem; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
+        .color-picker-wrapper input[type="color"] { width: 35px; height: 35px; border: none; border-radius: 50%; cursor: pointer; background: none; }
+
+        .mode-toggle-btn {
+            background: var(--main-light); border: 1px solid var(--main-color); color: var(--text-dark);
+            padding: 0.6rem; border-radius: var(--radius-md); cursor: pointer; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+
+        main { flex: 1; padding: 2.5rem; overflow-y: auto; display: flex; flex-direction: column; gap: 2rem; order: 1; }
+        .page { display: none; flex-direction: column; gap: 2rem; }
+        .page.active { display: flex; }
+
+        .card-box { background: var(--white); padding: 1.5rem; border-radius: var(--radius-lg); box-shadow: var(--shadow-soft); display: flex; flex-direction: column; gap: 1rem; border: 1px solid rgba(0,0,0,0.03); }
+        .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+
+        .user-avatar-wrapper { position: relative; display: inline-block; cursor: pointer; }
+        .user-avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; border: 2px solid var(--main-color); transition: 0.2s; }
+        .online-status { width: 12px; height: 12px; background: #2ECC71; border: 2px solid white; border-radius: 50%; position: absolute; bottom: 2px; right: 0; }
+        .user-badge { display: flex; align-items: center; gap: 0.8rem; font-size: 0.9rem; font-weight: bold; background: var(--main-light) !important; border: 1px solid var(--main-color); }
+
+        .video-timer-container {
+            position: relative; width: 100%; height: 440px; border-radius: var(--radius-lg); overflow: hidden;
+            background: #000; box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
+        }
+        .video-timer-container video, .video-timer-container iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border: none;
+        }
+        
+        .timer-overlay-clean {
+            position: relative; z-index: 10; text-align: center; color: white;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.85);
+            display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; height: 100%; justify-content: center;
+        }
+        .timer-overlay-clean .timer-display { font-size: 5rem; font-weight: 700; line-height: 1; letter-spacing: 3px; }
+
+        .fullscreen-icon-btn {
+            position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
+            color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; backdrop-filter: blur(5px); z-index: 20; transition: 0.2s;
+        }
+        .fullscreen-icon-btn:hover { background: rgba(0,0,0,0.8); }
+
+        .select-task-dropdown {
+            background: rgba(0, 0, 0, 0.55); color: white; border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 0.6rem 1.2rem; border-radius: 20px; outline: none; font-size: 0.95rem; font-weight: bold;
+            backdrop-filter: blur(5px); cursor: pointer; width: 280px; text-align: center;
+        }
+        .select-task-dropdown option { background: var(--text-dark); color: white; }
+
+        .round-counter-badge {
+            font-size: 0.85rem; font-weight: bold; background: rgba(255, 255, 255, 0.25);
+            padding: 0.3rem 0.9rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px);
+        }
+        
+        .ambience-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; align-items: center; }
+        .ambience-btn { background: var(--main-light); border: 1px solid var(--main-color); color: var(--text-dark); padding: 0.5rem 1rem; border-radius: 15px; font-size: 0.85rem; cursor: pointer; font-weight: 500; }
+        .ambience-btn:hover { background: var(--main-color); }
+
+        .leaderboard-item { display: flex; align-items: center; justify-content: space-between; background: var(--main-light); border: 1px solid var(--main-color); padding: 0.8rem 1.2rem; border-radius: var(--radius-md); font-weight: bold; }
+        .habits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.8rem; }
+        .habit-item { background: var(--main-light); border: 1px solid var(--main-color); padding: 0.8rem 1rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; font-size: 0.9rem; font-weight: 500; }
+        .habit-users { display: flex; gap: 0.3rem; }
+
+        .weekly-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.6rem; text-align: center; }
+        .day-card { background: var(--main-light); border: 1px solid var(--main-color); padding: 0.8rem 0.4rem; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 0.5rem; }
+        .day-card strong { display: block; color: var(--text-dark); font-size: 0.9rem; }
+        .day-textarea { width: 100%; height: 90px; padding: 0.5rem; border: 1px solid var(--main-color); border-radius: 6px; font-size: 0.8rem; outline: none; background: var(--white); color: var(--text-dark); resize: none; }
+
+        .pomodoro-controls { display: flex; gap: 0.8rem; justify-content: center; align-items: center; flex-wrap: wrap; background: var(--main-light); border: 1px solid var(--main-color); padding: 1rem; border-radius: var(--radius-md); }
+        .time-input-group { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
+        .time-input-group label { font-size: 0.75rem; color: var(--text-dark); font-weight: bold; }
+        .time-input-group input { width: 65px; padding: 0.4rem; border: 1px solid var(--main-color); border-radius: 8px; text-align: center; font-weight: bold; background: var(--white); color: var(--text-dark); }
+
+        .chat-box { height: 220px; background: var(--main-light); border: 1px solid var(--main-color); border-radius: var(--radius-md); padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
+        .chat-message { max-width: 85%; padding: 0.8rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; }
+        .chat-message.self { background: var(--main-color); color: var(--text-dark); align-self: flex-end; border: 1px solid rgba(0,0,0,0.1); }
+        .chat-message.other { background: var(--white); color: var(--text-dark); align-self: flex-start; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+
+        .btn-action { border: none; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: bold; background: var(--text-dark); color: var(--white); transition: 0.2s; }
+        .btn-action:hover { opacity: 0.9; }
+        .input-style { padding: 0.8rem; border: 1px solid var(--main-color); border-radius: var(--radius-md); outline: none; flex: 1; background: var(--white); color: var(--text-dark); }
+
+        .task-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
+        .task-item { display: flex; justify-content: space-between; align-items: center; background: var(--main-light); border: 1px solid var(--main-color); padding: 0.6rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; }
+        .task-item.completed { text-decoration: line-through; opacity: 0.6; }
+
+        .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; max-height: 450px; overflow-y: auto; padding: 0.5rem; }
+        .gift-card { background: var(--main-light); border: 2px dashed var(--main-color); padding: 1.5rem; border-radius: var(--radius-md); display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.8rem; text-align: center; }
+
+        .live-pomodoro-bar { background: #FFEAA7; color: #2D3436; border-right: 5px solid #FDCB6E; padding: 1rem 1.5rem; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: space-between; font-weight: 500; }
+        .video-call-btn { background: #0088cc; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 20px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 0.5rem; }
+        .video-call-btn:hover { background: #0077b5; }
+
+        @media (max-width: 992px) {
+            body { flex-direction: column; }
+            aside { width: 100%; order: 1; }
+            main { order: 2; }
+            .grid-2col, .grid-3col, .weekly-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <input type="file" id="videoUploader" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+
+    <div id="authOverlay" class="overlay-screen">
+        <div class="auth-card">
+            <h2>منصة RAS التفاعلية 🌸</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">سجّلي دخولكِ بحساب Google الحقيقي لبدء التحدي.</p>
+            <button class="google-btn-single" id="loginBtn">
+                <i class="lni lni-google"></i>
+                <span>تسجيل الدخول بحساب Google</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="roleSelectionOverlay" class="overlay-screen" style="display: none;">
+        <div class="auth-card">
+            <h2>أهلاً بكِ في التحدي! ✨</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">الموقع اتعرف على حسابكِ، اختر اسمكِ وتخصصكِ لمرة واحدة فقط:</p>
+            <button class="role-btn" onclick="assignUserRole('أسنان 🦷 (آلاء)')"><span>🦷 أنا آلاء (طب أسنان)</span></button>
+            <button class="role-btn" onclick="assignUserRole('عمارة 📐 (رزان)')"><span>📐 أنا رزان (عمارة)</span></button>
+        </div>
+    </div>
+
+    <aside>
+        <div class="brand-logo" onclick="showPage('homePage', this)"><span></span> RAS App</div>
+        <div id="currentUserBadge" class="user-badge" style="padding: 0.8rem; border-radius: var(--radius-md);"></div>
+
+        <ul class="nav-menu">
+            <li id="nav-homePage" class="nav-item active" onclick="showPage('homePage', this)"><i class="lni lni-grid-alt"></i> الرئيسية والحديقة</li>
+            <li id="nav-shopPage" class="nav-item" onclick="showPage('shopPage', this)"><i class="lni lni-gift"></i> متجر النباتات والبذور</li>
+            <li id="nav-nursingPage" class="nav-item" onclick="openDomain('nursing')"><i class="lni lni-first-aid"></i> التمريض (سارة)</li>
+            <li id="nav-dentistryPage" class="nav-item" onclick="openDomain('dentistry')"><i class="lni lni-protection"></i> الأسنان (آلاء)</li>
+            <li id="nav-architecturePage" class="nav-item" onclick="openDomain('architecture')"><i class="lni lni-ruler-pencil"></i> العمارة (رزان)</li>
+        </ul>
+
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto;">
+            <button class="mode-toggle-btn" onclick="toggleDarkMode()">
+                <i class="lni lni-night"></i> <span>وضع الليل / النهار</span>
+            </button>
+            <div class="theme-selector-box">
+                <h4><i class="lni lni-palette"></i> لون الثيم المفضل</h4>
+                <div class="color-picker-wrapper">
+                    <input type="color" id="themeColorPicker" value="#FAD4D8" onchange="changeThemeColor(this.value)">
+                    <span>لون هادي ورقيق</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <main>
+
+        <div id="homePage" class="page active">
+            <div class="card-box" style="background: linear-gradient(135deg, var(--main-light) 0%, var(--white) 100%); border: 1px solid var(--main-color);">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <h1 id="welcomeHeading">مرحباً بكِ مجدداً 👋</h1>
+                        <p style="opacity:0.9; font-size:0.95rem; margin-top: 0.4rem;">💡 <strong>قاعدة النقاط:</strong> كل دقيقة مذاكرة تمنحك نقطة تسقي بها نباتات حديقتك وتطورها!</p>
+                    </div>
+                    <button class="video-call-btn" onclick="startTelegramCall()">
+                        <i class="lni lni-telegram-original"></i> مكالمة تليجرام جماعية
+                    </button>
+                </div>
+            </div>
+
+            <!-- سجل الإنجاز الأسبوعي والسنوي -->
+            <section class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
+                <h3><i class="lni lni-calendar"></i> سجل الإنجاز الأسبوعي والسنوي 📊</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">مجموع ساعات المذاكرة المحفوظة لمتابعة إنجازكم حتى نهاية العام:</p>
+                <div style="display: flex; gap: 1.5rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                    <div style="background: var(--white); border: 1px solid var(--main-color); padding: 1rem 1.5rem; border-radius: var(--radius-md); flex: 1; text-align: center; box-shadow: var(--shadow-soft);">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">إنجاز هذا الأسبوع</span>
+                        <strong id="weeklyAchievementText" style="font-size: 1.4rem; color: var(--text-dark);">0.0 ساعة</strong>
+                    </div>
+                    <div style="background: var(--white); border: 1px solid var(--main-color); padding: 1rem 1.5rem; border-radius: var(--radius-md); flex: 1; text-align: center; box-shadow: var(--shadow-soft);">
+                        <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">الإنجاز السنوي الإجمالي (حتى النهاية)</span>
+                        <strong id="yearlyAchievementText" style="font-size: 1.4rem; color: #D63031;">0.0 ساعة</strong>
+                    </div>
+                </div>
+            </section>
+
+            <!-- حديقة النباتات وسقيها بالمذاكرة + رؤية حدائق الصديقات -->
+            <section class="card-box" style="background: var(--main-light); border: 2px solid var(--main-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                    <h3>🌱 حديقتك النباتية الخاصة</h3>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="switchGardenView('my')">حديقتي 🌿</button>
+                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; background: var(--white); color: var(--text-dark); border: 1px solid var(--main-color);" onclick="switchGardenView('friends')">زيارة حدائق الصديقات 🌸</button>
+                    </div>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">كلما ذاكرتِ وسجلتِ نقاطاً، تنمو نبتتك وتكبر وتزهر بشكل جميل حتى تصبح شجرة عملاقة!</p>
+                
+                <div id="myGardenView" style="background: var(--white); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--main-color); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px;">
+                    <div id="plantVisual" style="font-size: 4.5rem; animation: bounce 2s infinite;">🌱</div>
+                    <h4 id="plantNameDisplay" style="margin-top: 0.8rem; color: var(--text-dark);">نبتتك الحالية: بذرة صغيرة</h4>
+                    <p id="plantStageDesc" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">تحتاجين إلى جلسات مذاكرة لسقيها وجعلها تكبر!</p>
+                    <div style="margin-top: 1rem; width: 100%; max-width: 300px; background: rgba(0,0,0,0.05); height: 12px; border-radius: 6px; overflow: hidden;">
+                        <div id="plantProgressBar" style="width: 10%; height: 100%; background: #00B894; transition: width 0.4s;"></div>
+                    </div>
+                    <span id="plantPointsInfo" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">النقاط الحالية المسجلة للنبتة: 0 نقطة</span>
+                </div>
+
+                <!-- قسم زيارة حدائق الصديقات -->
+                <div id="friendsGardenView" style="display: none; background: var(--white); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--main-color);">
+                    <h4 style="margin-bottom: 1rem;">🌸 حدائق الصديقات (انظري لإنجازاتهن):</h4>
+                    <div id="friendsGardensList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <!-- يتم جلب حدائق الصديقات هنا عبر Firebase -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="card-box">
+                <h3><i class="lni lni-users"></i> حالة الصديقات (Online / Offline)</h3>
+                <div style="display:flex; gap:1.5rem;" id="friendsOnlineContainer"></div>
+            </section>
+
+            <section class="card-box">
+                <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
+                <div class="habits-grid" id="habitsContainer"></div>
+            </section>
+
+            <section class="grid-2col">
+                <div class="card-box">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <h3><i class="lni lni-trophy"></i> الترتيب اليومي ونقاط الساعات 🏆</h3>
+                        <span style="font-size:0.75rem; background:#FFEAA7; color:#2D3436; padding:0.2rem 0.6rem; border-radius:10px; font-weight:bold;">تحديث فوري</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; gap:0.8rem;" id="leaderboardContainer"></div>
+                </div>
+
+                <div class="card-box">
+                    <h3><i class="lni lni-stats-up"></i> إحصائياتكِ وساعات مذاكرتكِ</h3>
+                    <div>
+                        <div style="display:flex; justify-content:space-between; font-size:0.9rem; font-weight:bold;">
+                            <span>إجمالي رصيدك الحالي:</span>
+                            <span id="userTotalHoursText" style="color:#D63031;">0 نقطة (0.0 ساعة)</span>
+                        </div>
+                        <div class="progress-bar-container" style="background:rgba(0,0,0,0.05); height:10px; border-radius:5px; margin-top:0.5rem; overflow:hidden;">
+                            <div class="progress-bar-fill" id="dailyProgressBar" style="width: 0%; height:100%; background: #00B894; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; background: var(--main-light); border: 1px solid var(--main-color); padding: 0.8rem; border-radius: var(--radius-md);">
+                        <span style="font-size:0.85rem; font-weight:bold; color:var(--text-muted);">سجل الجولات المكتملة اليوم:</span>
+                        <ul id="sessionHistoryList" style="list-style:none; margin-top:0.4rem; font-size:0.8rem; display:flex; flex-direction:column; gap:0.3rem;">
+                            <li style="color:var(--text-muted);">لا توجد جلسات مكتملة بعد.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="livePomodoroSection" class="live-pomodoro-bar" style="display:none;">
+                <div>
+                    <strong>🧠 جلسة بومودورو نشطة الآن:</strong>
+                    <span id="livePomodoroUser">جاري المذاكرة...</span>
+                </div>
+                <div id="livePomodoroTime" style="font-size: 1.2rem; font-weight: bold; color: #D63031;">00:00</div>
+            </section>
+
+            <section class="card-box">
+                <h3><i class="lni lni-comments"></i> الشات الجماعي الحقيقي</h3>
+                <div class="chat-box" id="groupChatBox"></div>
+                <div style="display:flex; gap:0.8rem;">
+                    <input type="text" id="groupMessageInput" class="input-style" placeholder="اكتبي رسالتك للجروب..." onkeypress="handleGroupChatKey(event)">
+                    <button class="btn-action" onclick="sendGroupMessage()">إرسال</button>
+                </div>
+            </section>
+
+            <section class="grid-3col">
+                <div class="card-box" style="cursor:pointer; text-align:center; background: var(--main-light); border: 1px solid var(--main-color);" onclick="openDomain('nursing')">
+                    <span style="font-size:2.5rem;">🩺</span>
+                    <h4>قسم التمريض (سارة)</h4>
+                </div>
+                <div class="card-box" style="cursor:pointer; text-align:center; background: var(--main-light); border: 1px solid var(--main-color);" onclick="openDomain('dentistry')">
+                    <span style="font-size:2.5rem;">🦷</span>
+                    <h4>قسم طب الأسنان (آلاء)</h4>
+                </div>
+                <div class="card-box" style="cursor:pointer; text-align:center; background: var(--main-light); border: 1px solid var(--main-color);" onclick="openDomain('architecture')">
+                    <span style="font-size:2.5rem;">📐</span>
+                    <h4>قسم العمارة (رزان)</h4>
+                </div>
+            </section>
+        </div>
+
+        <div id="shopPage" class="page">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>🎁 متجر بذور النباتات والأشجار (الـ 20 نبتة)</h2>
+                <span id="shopUserPoints" style="font-weight:bold; background:var(--main-light); color:var(--text-dark); padding:0.5rem 1rem; border-radius:15px; border:1px solid var(--main-color);">رصيدك: 0 نقطة</span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.9rem;">اختاري نباتاتك المفضلة من القائمة الكاملة وازرعيها في حديقتك بفلوس وساعات المذاكرة:</p>
+            
+            <div class="shop-grid">
+                <div class="gift-card"><span style="font-size: 2rem;">🌿</span><h5>بوتس</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 30 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('بوتس', '🌿', 30)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🪴</span><h5>مونستيرا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 50 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('مونستيرا', '🪴', 50)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌵</span><h5>سنسيوريا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 40 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('سنسيوريا', '🌵', 40)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌿</span><h5>زانثوما</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 45 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('زانثوما', '🌿', 45)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🍃</span><h5>سيروبيجيا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 55 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('سيروبيجيا', '🍃', 55)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🪴</span><h5>كالساتيا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 60 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('كالساتيا', '🪴', 60)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌸</span><h5>سباثيفيلوم</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 65 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('سباثيفيلوم', '🌸', 65)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌿</span><h5>بيبروميا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 35 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('بيبروميا', '🌿', 35)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌴</span><h5>دراسينا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 70 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('دراسينا', '🌴', 70)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌿</span><h5>سرخس بوسطن</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 50 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('سرخس بوسطن', '🌿', 50)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">💜</span><h5>لافندر</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 75 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('لافندر', '💜', 75)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌼</span><h5>الياسمين الزهري</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 80 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الياسمين الزهري', '🌼', 80)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌺</span><h5>الجهنمية</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 85 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الجهنمية', '🌺', 85)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌸</span><h5>الجيرانيوم</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 60 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الجيرانيوم', '🌸', 60)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌵</span><h5>العصاريات والصبارات المزهرة</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 45 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('العصاريات والصبارات المزهرة', '🌵', 45)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌺</span><h5>الكركديه</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 90 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الكركديه', '🌺', 90)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">💜</span><h5>البنفسج الأفريقي</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 70 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('البنفسج الأفريقي', '💜', 70)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🪴</span><h5>الألوي فيرا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 40 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الألوي فيرا', '🪴', 40)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌹</span><h5>الكاميليا</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 100 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الكاميليا', '🌹', 100)">شراء بذور 🌱</button></div>
+                <div class="gift-card"><span style="font-size: 2rem;">🌿</span><h5>الروز ماري</h5><span style="font-size: 0.8rem; color: var(--text-muted);">السعر: 50 نقطة</span><button class="btn-action" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="buyPlantSeed('الروز ماري', '🌿', 50)">شراء بذور 🌱</button></div>
+            </div>
+        </div>
+
+        <!-- قسم التمريض -->
+        <div id="nursingPage" class="page">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>🩺 قسم التمريض (سارة)</h2>
+                <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
+            </div>
+            
+            <div class="grid-2col">
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-nursing" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص التمريض..." oninput="saveDomainData('nursing', 'notes')"></textarea>
+                </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
+                    <textarea id="dailyWinsArea-nursing" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في التمريض..." oninput="saveDomainData('nursing', 'wins')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box" style="padding:1rem;">
+                <div class="pomodoro-controls">
+                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="nursingWorkMins" value="25" min="1" max="180"></div>
+                    <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="nursingBreakMins" value="5" min="1" max="60"></div>
+                    <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="nursingRoundsTarget" value="4" min="1" max="12"></div>
+                    <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="nursingLongBreakMins" value="15" min="1" max="120"></div>
+                    <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('nursing')">تطبيق</button>
+                    <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('nursing', 5)">☕ استراحة سريعة</button>
+                </div>
+            </div>
+
+            <div class="video-timer-container" id="nursingContainer">
+                <button class="fullscreen-icon-btn" onclick="toggleFullscreen('nursingContainer')" title="تكبير الشاشة">⛶</button>
+                <video id="nursingVideoPlayer" autoplay loop muted style="display:none;"></video>
+                <iframe id="nursingAmbienceIframe" src="https://www.youtube.com/embed/mPZkdNFkNps?autoplay=1&mute=1&loop=1&playlist=mPZkdNFkNps" allow="autoplay; encrypted-media"></iframe>
+                <div class="timer-overlay-clean">
+                    <select id="nursingTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
+                    <div style="display:flex; gap:0.6rem; align-items:center;">
+                        <span id="nursingModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
+                        <span id="nursingRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
+                    </div>
+                    <div class="timer-display" id="nursingTimer">25:00</div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="nursingStartBtn" onclick="togglePomodoro('nursing')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('nursing')">إعادة ضبط</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="triggerVideoUpload('nursing')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="setAmbience('nursing', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('nursing', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
+                    <button class="ambience-btn" onclick="setAmbience('nursing', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <div style="display:flex; gap:0.3rem; flex:1;">
+                        <input type="text" id="nursingYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
+                        <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('nursing')">تشغيل</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية للتمريض</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="nursing-day-0" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="nursing-day-1" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="nursing-day-2" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="nursing-day-3" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="nursing-day-4" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="nursing-day-5" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="nursing-day-6" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>مهام التمريض اليومية</h3>
+                <div style="display:flex; gap:0.5rem;"><input type="text" id="nursingTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="nursingTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('nursing')">إضافة</button></div>
+                <ul id="nursingTaskList" class="task-list"></ul>
+            </div>
+        </div>
+
+        <!-- قسم طب الأسنان -->
+        <div id="dentistryPage" class="page">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>🦷 قسم طب الأسنان (آلاء)</h2>
+                <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-dentistry" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص الأسنان..." oninput="saveDomainData('dentistry', 'notes')"></textarea>
+                </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
+                    <textarea id="dailyWinsArea-dentistry" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في الأسنان..." oninput="saveDomainData('dentistry', 'wins')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box" style="padding:1rem;">
+                <div class="pomodoro-controls">
+                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="dentistryWorkMins" value="25" min="1" max="180"></div>
+                    <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="dentistryBreakMins" value="5" min="1" max="60"></div>
+                    <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="dentistryRoundsTarget" value="4" min="1" max="12"></div>
+                    <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="dentistryLongBreakMins" value="15" min="1" max="120"></div>
+                    <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('dentistry')">تطبيق</button>
+                    <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('dentistry', 5)">☕ استراحة سريعة</button>
+                </div>
+            </div>
+
+            <div class="video-timer-container" id="dentistryContainer">
+                <button class="fullscreen-icon-btn" onclick="toggleFullscreen('dentistryContainer')" title="تكبير الشاشة">⛶</button>
+                <video id="dentistryVideoPlayer" autoplay loop muted style="display:none;"></video>
+                <iframe id="dentistryAmbienceIframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk" allow="autoplay; encrypted-media"></iframe>
+                <div class="timer-overlay-clean">
+                    <select id="dentistryTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
+                    <div style="display:flex; gap:0.6rem; align-items:center;">
+                        <span id="dentistryModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
+                        <span id="dentistryRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
+                    </div>
+                    <div class="timer-display" id="dentistryTimer">25:00</div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="dentistryStartBtn" onclick="togglePomodoro('dentistry')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('dentistry')">إعادة ضبط</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="triggerVideoUpload('dentistry')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
+                    <button class="ambience-btn" onclick="setAmbience('dentistry', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <div style="display:flex; gap:0.3rem; flex:1;">
+                        <input type="text" id="dentistryYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
+                        <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('dentistry')">تشغيل</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية لطب الأسنان</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="dentistry-day-0" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="dentistry-day-1" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="dentistry-day-2" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="dentistry-day-3" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="dentistry-day-4" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="dentistry-day-5" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="dentistry-day-6" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>مهام طب الأسنان اليومية</h3>
+                <div style="display:flex; gap:0.5rem;"><input type="text" id="dentistryTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="dentistryTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('dentistry')">إضافة</button></div>
+                <ul id="dentistryTaskList" class="task-list"></ul>
+            </div>
+        </div>
+
+        <!-- قسم العمارة -->
+        <div id="architecturePage" class="page">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>📐 قسم العمارة (رزان)</h2>
+                <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
+            </div>
+
+            <div class="grid-2col">
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-architecture" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص العمارة..." oninput="saveDomainData('architecture', 'notes')"></textarea>
+                </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
+                    <textarea id="dailyWinsArea-architecture" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في العمارة..." oninput="saveDomainData('architecture', 'wins')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box" style="padding:1rem;">
+                <div class="pomodoro-controls">
+                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="architectureWorkMins" value="45" min="1" max="180"></div>
+                    <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="architectureBreakMins" value="10" min="1" max="60"></div>
+                    <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="architectureRoundsTarget" value="4" min="1" max="12"></div>
+                    <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="architectureLongBreakMins" value="20" min="1" max="120"></div>
+                    <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('architecture')">تطبيق</button>
+                    <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('architecture', 10)">☕ استراحة سريعة</button>
+                </div>
+            </div>
+
+            <div class="video-timer-container" id="architectureContainer">
+                <button class="fullscreen-icon-btn" onclick="toggleFullscreen('architectureContainer')" title="تكبير الشاشة">⛶</button>
+                <video id="architectureVideoPlayer" autoplay loop muted style="display:none;"></video>
+                <iframe id="architectureAmbienceIframe" src="https://www.youtube.com/embed/eKFTSSKCzWA?autoplay=1&mute=1&loop=1&playlist=eKFTSSKCzWA" allow="autoplay; encrypted-media"></iframe>
+                <div class="timer-overlay-clean">
+                    <select id="architectureTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
+                    <div style="display:flex; gap:0.6rem; align-items:center;">
+                        <span id="architectureModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
+                        <span id="architectureRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
+                    </div>
+                    <div class="timer-display" id="architectureTimer">45:00</div>
+                    <div style="display:flex; gap:1rem;">
+                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="architectureStartBtn" onclick="togglePomodoro('architecture')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('architecture')">إعادة ضبط</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="triggerVideoUpload('architecture')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="setAmbience('architecture', 'mPZkdNFkNps')">🌧️ مطر</button>
+                    <button class="ambience-btn" onclick="setAmbience('architecture', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
+                    <button class="ambience-btn" onclick="setAmbience('architecture', 'eKFTSSKCzWA')">🌊 بحر</button>
+                    <div style="display:flex; gap:0.3rem; flex:1;">
+                        <input type="text" id="architectureYtUrl" class="input-style" style="padding:0.3rem 0.6rem; font-size:0.8rem;" placeholder="رابط يوتيوب مخصص...">
+                        <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('architecture')">تشغيل</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية لقسم العمارة</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="architecture-day-0" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="architecture-day-1" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="architecture-day-2" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="architecture-day-3" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="architecture-day-4" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="architecture-day-5" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="architecture-day-6" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>مهام العمارة اليومية</h3>
+                <div style="display:flex; gap:0.5rem;"><input type="text" id="architectureTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="architectureTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('architecture')">إضافة</button></div>
+                <ul id="architectureTaskList" class="task-list"></ul>
+            </div>
+        </div>
+
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAETOl_tIrro0IwNZThwqjkefa5c9FzVTs",
+            authDomain: "rass-280bb.firebaseapp.com",
+            projectId: "rass-280bb",
+            storageBucket: "rass-280bb.firebasestorage.app",
+            messagingSenderId: "1058461667045",
+            appId: "1:1058461667045:web:0de3829e688ccd8aa80e0c",
+            measurementId: "G-TN4YHD4B5J"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        window.currentUser = null;
+        window.tempUserObj = null;
+        window.db = db;
+
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            signInWithRedirect(auth, provider).catch((err) => alert("خطأ في تسجيل الدخول: " + err.message));
+        });
+
+        getRedirectResult(auth).then(async (result) => {
+            if (result && result.user) {
+                await processUserLogin(result.user);
+            }
+        }).catch((err) => console.log(err));
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user && !window.currentUser) {
+                await processUserLogin(user);
+            }
+        });
+
+        async function processUserLogin(user) {
+            const userDocRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userDocRef);
+
+            if (user.email.toLowerCase() === "sarasaro1029@gmail.com") {
+                saveAndInitializeUser(user, "تمريض 🩺 (سارة)");
+                return;
+            }
+
+            if (userSnap.exists() && userSnap.data().role) {
+                saveAndInitializeUser(user, userSnap.data().role);
+            } else {
+                window.tempUserObj = user;
+                document.getElementById('authOverlay').style.display = 'none';
+                document.getElementById('roleSelectionOverlay').style.display = 'flex';
+            }
+        }
+
+        window.assignUserRole = async function(selectedRole) {
+            if (window.tempUserObj) {
+                await saveAndInitializeUser(window.tempUserObj, selectedRole);
+                document.getElementById('roleSelectionOverlay').style.display = 'none';
+            }
+        };
+
+        async function saveAndInitializeUser(user, role) {
+            window.currentUser = {
+                uid: user.uid,
+                name: user.displayName,
+                email: user.email,
+                avatar: user.photoURL,
+                role: role
+            };
+
+            await setDoc(doc(db, "users", user.uid), {
+                name: user.displayName,
+                email: user.email,
+                avatar: user.photoURL,
+                role: role,
+                points: 0,
+                plantIcon: '🌱',
+                plantName: 'بذرة صغيرة',
+                online: true,
+                lastSeen: new Date()
+            }, { merge: true });
+
+            document.getElementById('authOverlay').style.display = 'none';
+            document.getElementById('currentUserBadge').innerHTML = `
+                <div class="user-avatar-wrapper"><img src="${user.photoURL}" class="user-avatar"><span class="online-status"></span></div>
+                <div><div>${user.displayName}</div><div style="font-size:0.75rem; color:var(--text-muted);">${role}</div></div>
+            `;
+            document.getElementById('welcomeHeading').innerText = `أهلاً بكِ يا ${user.displayName} 👋 (${role})`;
+
+            listenToData();
+            initHabits();
+        }
+
+        function listenToData() {
+            const q = query(collection(db, "chat"), orderBy("time", "asc"));
+            onSnapshot(q, (snapshot) => {
+                const box = document.getElementById('groupChatBox');
+                if(!box) return;
+                box.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const isSelf = window.currentUser && data.uid === window.currentUser.uid;
+                    box.innerHTML += `
+                        <div class="chat-message ${isSelf ? 'self' : 'other'}">
+                            <span style="font-size:0.75rem; font-weight:bold; opacity:0.8;">${data.name}</span>
+                            <div>${data.text}</div>
+                        </div>
+                    `;
+                });
+                box.scrollTop = box.scrollHeight;
+            });
+
+            onSnapshot(collection(db, "users"), (snapshot) => {
+                const container = document.getElementById('friendsOnlineContainer');
+                const leaderboard = document.getElementById('leaderboardContainer');
+                const friendsGardensContainer = document.getElementById('friendsGardensList');
+                if(!container || !leaderboard) return;
+                container.innerHTML = ''; leaderboard.innerHTML = ''; if(friendsGardensContainer) friendsGardensContainer.innerHTML = '';
+
+                snapshot.forEach((doc) => {
+                    const friend = doc.data();
+                    const pts = friend.points || 0;
+                    const hours = (pts / 60).toFixed(1);
+                    const plant = friend.plantIcon || '🌱';
+                    const plantTitle = friend.plantName || 'بذرة صغيرة';
+
+                    if(window.currentUser && friend.email === window.currentUser.email) {
+                        document.getElementById('userTotalHoursText').innerText = `${pts} نقطة (${hours} ساعة)`;
+                        const shopPoints = document.getElementById('shopUserPoints');
+                        if(shopPoints) shopPoints.innerText = `رصيدك: ${pts} نقطة`;
+
+                        updateAchievements(pts);
+                        updateMyPlantDisplay(pts, plant, plantTitle);
+                    }
+
+                    container.innerHTML += `
+                        <div class="user-badge" style="padding:0.6rem 1rem; border-radius:var(--radius-md);">
+                            <img src="${friend.avatar}" class="user-avatar">
+                            <div><div>${friend.name}</div><div style="font-size:0.75rem; color:green;">${friend.role || 'متصل 🟢'}</div></div>
+                        </div>
+                    `;
+
+                    leaderboard.innerHTML += `
+                        <div class="leaderboard-item">
+                            <div style="display:flex; align-items:center; gap:0.8rem;">
+                                <img src="${friend.avatar}" class="user-avatar" style="width:30px; height:30px;">
+                                <span>${friend.name} (${friend.role})</span>
+                            </div>
+                            <span style="color:#D63031; font-weight:bold;">⭐ ${pts} نقطة (${hours} ساعة)</span>
+                        </div>
+                    `;
+
+                    // عرض حدائق الصديقات لزيارتها
+                    if(friendsGardensContainer && (!window.currentUser || friend.email !== window.currentUser.email)) {
+                        friendsGardensContainer.innerHTML += `
+                            <div style="background: var(--bg-color); border: 1px solid var(--main-color); padding: 1rem; border-radius: 12px; text-align: center;">
+                                <img src="${friend.avatar}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--main-color); margin-bottom: 0.3rem;">
+                                <h5 style="color: var(--text-dark);">${friend.name}</h5>
+                                <div style="font-size: 2.5rem; margin: 0.3rem 0;">${plant}</div>
+                                <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">${plantTitle}</span>
+                                <span style="font-size: 0.75rem; color: #D63031; font-weight: bold; margin-top: 0.3rem; display: block;">⭐ ${pts} نقطة</span>
+                            </div>
+                        `;
+                    }
+                });
+            });
+        }
+
+        window.sendGroupMessage = async function() {
+            const input = document.getElementById('groupMessageInput');
+            if (!input || !input.value.trim() || !window.currentUser) return;
+            await addDoc(collection(db, "chat"), {
+                uid: window.currentUser.uid,
+                name: window.currentUser.name,
+                text: input.value,
+                time: new Date()
+            });
+            input.value = '';
+        };
+    </script>
+
+    <script>
+        let totalDailyMinutes = 0;
+        let sessionHistory = [];
+        let currentActiveDomainForVideo = 'nursing';
+
+        // تبديل العرض بين حديقتي وحدائق الصديقات
+        window.switchGardenView = function(view) {
+            const myView = document.getElementById('myGardenView');
+            const friendsView = document.getElementById('friendsGardenView');
+            if(view === 'my') {
+                myView.style.display = 'flex';
+                friendsView.style.display = 'none';
+            } else {
+                myView.style.display = 'none';
+                friendsView.style.display = 'block';
+            }
+        };
+
+        // شراء بذور النباتات من المتجر وتحديث الحديقة
+        window.buyPlantSeed = async function(plantName, plantIcon, plantPrice) {
+            let currentPoints = 0;
+            const pointsText = document.getElementById('shopUserPoints').innerText;
+            const match = pointsText.match(/\d+/);
+            if(match) currentPoints = parseInt(match[0]);
+
+            if(currentPoints < plantPrice) {
+                alert('⚠️ رصيدك الحالي من النقاط لا يكفي لشراء هذه البذور! ذاكري أكثر.');
+                return;
+            }
+
+            // خصم النقاط وتحديث نبتة المستخدم في الفايربيز
+            if(window.currentUser && window.db) {
+                const { doc, updateDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                await updateDoc(doc(window.db, "users", window.currentUser.uid), {
+                    plantIcon: plantIcon,
+                    plantName: plantName,
+                    points: currentPoints - plantPrice
+                });
+                alert(`🌱 مبروك! تم زراعة "${plantName}" في حديقتك بنجاح.`);
+            }
+        };
+
+        function updateMyPlantDisplay(points, plantIcon, plantTitle) {
+            const visual = document.getElementById('plantVisual');
+            const nameDisplay = document.getElementById('plantNameDisplay');
+            const stageDesc = document.getElementById('plantStageDesc');
+            const progressBar = document.getElementById('plantProgressBar');
+            const pointsInfo = document.getElementById('plantPointsInfo');
+
+            if(!visual) return;
+
+            visual.innerText = plantIcon;
+            nameDisplay.innerText = `نبتتك الحالية: ${plantTitle}`;
+
+            let progress = Math.min(100, (points / 200) * 100);
+            progressBar.style.width = progress + '%';
+            pointsInfo.innerText = `النقاط الحالية المسجلة لحديقتك: ${points} نقطة`;
+
+            if(points < 50) stageDesc.innerText = "بذرة صغيرة تحتاج للسقي بالمذاكرة مستمرة..";
+            else if(points < 150) stageDesc.innerText = "بدأت براعم النبتة في الظهور والنمو بجمال!";
+            else stageDesc.innerText = "ما شاء الله! أصبحت نبتة كاملة ومزهرة ورائعة!";
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedColor = localStorage.getItem('ras_custom_theme_color');
+            if(savedColor) {
+                document.documentElement.style.setProperty('--main-color', savedColor);
+                document.documentElement.style.setProperty('--main-light', hexToRgba(savedColor, 0.35));
+                const picker = document.getElementById('themeColorPicker');
+                if(picker) picker.value = savedColor;
+            }
+
+            ['nursing', 'dentistry', 'architecture'].forEach(domain => {
+                if(localStorage.getItem(`ras_quick_notes_${domain}`)) {
+                    document.getElementById(`quickNotesArea-${domain}`).value = localStorage.getItem(`ras_quick_notes_${domain}`);
+                }
+                if(localStorage.getItem(`ras_daily_wins_${domain}`)) {
+                    document.getElementById(`dailyWinsArea-${domain}`).value = localStorage.getItem(`ras_daily_wins_${domain}`);
+                }
+                for(let i=0; i<7; i++) {
+                    const savedPlan = localStorage.getItem(`ras_plan_${domain}_${i}`);
+                    if(savedPlan) {
+                        const el = document.getElementById(`${domain}-day-${i}`);
+                        if(el) el.value = savedPlan;
+                    }
+                }
+            });
+
+            loadAchievementsDisplay();
+        });
+
+        function updateAchievements(totalPoints) {
+            localStorage.setItem('ras_yearly_minutes', totalPoints);
+            localStorage.setItem('ras_weekly_minutes', totalPoints);
+            loadAchievementsDisplay();
+        }
+
+        function loadAchievementsDisplay() {
+            let yearlyMins = parseInt(localStorage.getItem('ras_yearly_minutes') || '0');
+            let weeklyMins = parseInt(localStorage.getItem('ras_weekly_minutes') || '0');
+
+            document.getElementById('yearlyAchievementText').innerText = (yearlyMins / 60).toFixed(1) + ' ساعة';
+            document.getElementById('weeklyAchievementText').innerText = (weeklyMins / 60).toFixed(1) + ' ساعة';
+        }
+
+        function saveDomainData(domain, type) {
+            const val = document.getElementById(`${type === 'notes' ? 'quickNotesArea' : 'dailyWinsArea'}-${domain}`).value;
+            localStorage.setItem(`ras_${type === 'notes' ? 'quick_notes' : 'daily_wins'}_${domain}`, val);
+        }
+
+        function saveWeeklyPlans(domain) {
+            for(let i=0; i<7; i++) {
+                const el = document.getElementById(`${domain}-day-${i}`);
+                if(el) {
+                    localStorage.setItem(`ras_plan_${domain}_${i}`, el.value);
+                }
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+
+        function changeThemeColor(colorHex) {
+            document.documentElement.style.setProperty('--main-color', colorHex);
+            document.documentElement.style.setProperty('--main-light', hexToRgba(colorHex, 0.35));
+            localStorage.setItem('ras_custom_theme_color', colorHex);
+        }
+
+        function hexToRgba(hex, alpha) {
+            let c = hex.replace('#','');
+            if(c.length===3) c = c.split('').map(x => x+x).join('');
+            let num = parseInt(c, 16);
+            return `rgba(${(num>>16)&255}, ${(num>>8)&255}, ${num&255}, ${alpha})`;
+        }
+
+        function toggleFullscreen(elementId) {
+            const elem = document.getElementById(elementId);
+            if (!document.fullscreenElement && elem) elem.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        function setAmbience(domain, videoId) {
+            const vid = document.getElementById(domain + 'VideoPlayer');
+            const iframe = document.getElementById(domain + 'AmbienceIframe');
+            if(vid) { vid.style.display = 'none'; vid.pause(); }
+            if(iframe) { iframe.style.display = 'block'; iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`; }
+        }
+
+        function loadCustomYoutube(domain) {
+            const urlInput = document.getElementById(domain + 'YtUrl').value.trim();
+            if(!urlInput) return;
+            let videoId = urlInput.includes('v=') ? urlInput.split('v=')[1].split('&')[0] : (urlInput.includes('youtu.be/') ? urlInput.split('youtu.be/')[1].split('?')[0] : urlInput);
+            if(videoId) setAmbience(domain, videoId);
+        }
+
+        function triggerVideoUpload(domain) {
+            currentActiveDomainForVideo = domain;
+            document.getElementById('videoUploader').click();
+        }
+
+        function handleVideoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const videoUrl = URL.createObjectURL(file);
+                const domain = currentActiveDomainForVideo;
+                const iframe = document.getElementById(domain + 'AmbienceIframe');
+                if(iframe) { iframe.style.display = 'none'; iframe.src = ''; }
+                const vid = document.getElementById(domain + 'VideoPlayer');
+                if(vid) { vid.style.display = 'block'; vid.src = videoUrl; vid.play(); }
+            }
+        }
+
+        const pomodoroTimers = {
+            nursing: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false },
+            dentistry: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false },
+            architecture: { workMins: 45, breakMins: 10, longBreakMins: 20, roundsTarget: 4, currentRound: 1, seconds: 45 * 60, mode: 'work', interval: null, running: false }
+        };
+
+        function applyCustomPomodoro(domain) {
+            const p = pomodoroTimers[domain];
+            clearInterval(p.interval); p.running = false;
+            document.getElementById(domain + 'StartBtn').innerText = 'بدء الجلسة';
+            p.workMins = parseInt(document.getElementById(domain + 'WorkMins')?.value) || 25;
+            p.breakMins = parseInt(document.getElementById(domain + 'BreakMins')?.value) || 5;
+            p.longBreakMins = parseInt(document.getElementById(domain + 'LongBreakMins')?.value) || 15;
+            p.roundsTarget = parseInt(document.getElementById(domain + 'RoundsTarget')?.value) || 4;
+            p.mode = 'work';
+            p.seconds = p.workMins * 60;
+            updatePomodoroUI(domain);
+        }
+
+        function triggerQuickBreak(domain, mins) {
+            const p = pomodoroTimers[domain];
+            clearInterval(p.interval); p.running = false;
+            document.getElementById(domain + 'StartBtn').innerText = 'بدء الجلسة';
+            p.mode = 'shortBreak';
+            p.seconds = mins * 60;
+            updatePomodoroUI(domain);
+            alert(`☕ تم تفعيل استراحة سريعة لمدة ${mins} دقائق! خذي قسطاً من الراحة.`);
+        }
+
+        function updatePomodoroUI(domain) {
+            const p = pomodoroTimers[domain];
+            let m = Math.floor(p.seconds / 60), s = p.seconds % 60;
+            const timerEl = document.getElementById(domain + 'Timer');
+            if(timerEl) timerEl.innerText = `${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+            const roundEl = document.getElementById(domain + 'RoundCounter');
+            if(roundEl) roundEl.innerText = `الجولة: ${p.currentRound} / ${p.roundsTarget}`;
+
+            const badge = document.getElementById(domain + 'ModeBadge');
+            if(badge) {
+                if (p.mode === 'work') badge.innerText = '🧠 وضع التركيز';
+                else if(p.mode === 'shortBreak') badge.innerText = '☕ استراحة قصيرة';
+                else badge.innerText = '🎉 استراحة طويلة';
+            }
+        }
+
+        function togglePomodoro(domain) {
+            const p = pomodoroTimers[domain];
+            const btn = document.getElementById(domain + 'StartBtn');
+            const liveBar = document.getElementById('livePomodoroSection');
+            const taskSelect = document.getElementById(domain + 'TaskSelect');
+            const taskName = taskSelect ? taskSelect.options[taskSelect.selectedIndex].text : 'مذاكرة';
+
+            if (!p.running) {
+                p.running = true;
+                btn.innerText = 'إيقاف مؤقت';
+                liveBar.style.display = 'flex';
+                document.getElementById('livePomodoroUser').innerText = `${window.currentUser ? window.currentUser.name : 'سارة'} تذاكر (${taskName})`;
+
+                p.interval = setInterval(() => {
+                    if (p.seconds > 0) {
+                        p.seconds--;
+                        updatePomodoroUI(domain);
+                        let m = Math.floor(p.seconds / 60), s = p.seconds % 60;
+                        document.getElementById('livePomodoroTime').innerText = `${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+                    } else {
+                        clearInterval(p.interval);
+                        p.running = false;
+                        btn.innerText = 'بدء الجلسة';
+
+                        if (p.mode === 'work') {
+                            logCompletedSession(domain, p.workMins, taskName);
+                            if (p.currentRound >= p.roundsTarget) {
+                                alert(`🎉 أتممتِ ${p.roundsTarget} جولات! حان وقت الاستراحة الطويلة (${p.longBreakMins} دقيقة).`);
+                                p.mode = 'longBreak'; p.seconds = p.longBreakMins * 60; p.currentRound = 1;
+                            } else {
+                                alert(`انتهت الجولة! 🎯 خذي استراحة قصيرة (${p.breakMins} دقائق).`);
+                                p.mode = 'shortBreak'; p.seconds = p.breakMins * 60; p.currentRound++;
+                            }
+                        } else {
+                            alert('انتهت فترة الاستراحة! ☕ استعدي للجولة الجديدة.');
+                            p.mode = 'work'; p.seconds = p.workMins * 60;
+                        }
+                        updatePomodoroUI(domain);
+                    }
+                }, 1000);
+            } else {
+                clearInterval(p.interval); p.running = false; btn.innerText = 'استئناف';
+            }
+        }
+
+        function resetPomodoro(domain) { applyCustomPomodoro(domain); }
+
+        async function logCompletedSession(domain, mins, taskTitle) {
+            totalDailyMinutes += mins;
+            document.getElementById('dailyProgressBar').style.width = Math.min(100, Math.round((totalDailyMinutes / 240) * 100)) + '%';
+
+            if(window.currentUser && window.db) {
+                const { doc, updateDoc, increment } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
+                await updateDoc(doc(window.db, "users", window.currentUser.uid), {
+                    points: increment(mins)
+                });
+            }
+
+            const timeNow = new Date().toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+            sessionHistory.unshift(`جلسة ${taskTitle} (+${mins} نقطة) - ${timeNow}`);
+            document.getElementById('sessionHistoryList').innerHTML = sessionHistory.map(item => `<li>✅ ${item}</li>`).join('');
+        }
+
+        const habitsList = ['أذكار الصباح', 'أذكار المساء', 'الورد اليومي', 'صلاة الفجر', 'صلاة الظهر', 'صلاة العصر', 'صلاة المغرب', 'صلاة العشاء'];
+        const habitsState = {};
+
+        function initHabits() {
+            const container = document.getElementById('habitsContainer');
+            if(!container) return;
+            container.innerHTML = '';
+            habitsList.forEach((habit, idx) => {
+                habitsState[idx] = habitsState[idx] || [];
+                container.innerHTML += `
+                    <div class="habit-item">
+                        <span>${habit}</span>
+                        <div class="habit-users" id="habit-users-${idx}">${renderHabitUsers(idx)}</div>
+                        <input type="checkbox" onchange="toggleHabit(${idx})" ${habitsState[idx].some(u => u.name === (window.currentUser ? window.currentUser.name : '')) ? 'checked' : ''}>
+                    </div>
+                `;
+            });
+        }
+
+        function renderHabitUsers(habitIdx) {
+            return habitsState[habitIdx].map(u => `<img src="${u.avatar}" class="user-avatar" title="${u.name}">`).join('');
+        }
+
+        function toggleHabit(habitIdx) {
+            if(!window.currentUser) return;
+            const existingIdx = habitsState[habitIdx].findIndex(u => u.name === window.currentUser.name);
+            if (existingIdx > -1) habitsState[habitIdx].splice(existingIdx, 1);
+            else habitsState[habitIdx].push(window.currentUser);
+            document.getElementById(`habit-users-${habitIdx}`).innerHTML = renderHabitUsers(habitIdx);
+        }
+
+        const tasks = { nursing: [], dentistry: [], architecture: [] };
+        function addTask(domain) {
+            const textInput = document.getElementById(domain + 'TaskText');
+            const hoursInput = document.getElementById(domain + 'TaskHours');
+            if(!textInput || !textInput.value.trim()) return;
+            tasks[domain].push({ text: textInput.value, hours: hoursInput?.value || 1, done: false });
+            textInput.value = ''; if(hoursInput) hoursInput.value = '';
+            renderTasks(domain); updateTaskSelectDropdown(domain);
+        }
+
+        function renderTasks(domain) {
+            const list = document.getElementById(domain + 'TaskList');
+            if(!list) return;
+            list.innerHTML = '';
+            tasks[domain].forEach((t, i) => {
+                list.innerHTML += `
+                    <li class="task-item ${t.done ? 'completed' : ''}">
+                        <span>${t.text} (${t.hours} ساعة)</span>
+                        <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${domain}', ${i})">
+                    </li>
+                `;
+            });
+        }
+
+        function updateTaskSelectDropdown(domain) {
+            const dropdown = document.getElementById(domain + 'TaskSelect');
+            if(!dropdown) return;
+            dropdown.innerHTML = `<option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option>`;
+            tasks[domain].forEach((t) => {
+                if(!t.done) dropdown.innerHTML += `<option value="${t.text}">${t.text}</option>`;
+            });
+        }
+
+        function toggleTask(domain, i) { 
+            tasks[domain][i].done = !tasks[domain][i].done; 
+            renderTasks(domain); updateTaskSelectDropdown(domain);
+        }
+
+        function showPage(pageId, element) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId)?.classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const targetNav = element || document.getElementById('nav-' + pageId);
+            if (targetNav) targetNav.classList.add('active');
+        }
+
+        function openDomain(domain) { showPage(domain + 'Page', document.getElementById('nav-' + domain + 'Page')); }
+        function handleGroupChatKey(e) { if (e.key === 'Enter') sendGroupMessage(); }
+        function startTelegramCall() { window.open("https://t.me/+xikIbLpS-P40ZmM0", '_blank'); }
+    </script>
+</body>
+</html>
