@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAS Platform |   يارب امتياز</title>
+    <title>يارب امتياز 🌸</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
     
@@ -49,13 +49,6 @@
         }
         .google-btn-single:hover { background: #3367D6; }
 
-        .role-btn {
-            width: 100%; padding: 1rem; border-radius: var(--radius-md); border: 2px solid var(--main-color);
-            background: var(--main-light); font-size: 1.1rem; font-weight: bold; cursor: pointer; transition: 0.2s;
-            display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-dark);
-        }
-        .role-btn:hover { background: var(--main-color); transform: translateY(-2px); }
-
         aside {
             width: 270px; background: var(--white); border-left: 1px solid rgba(0, 0, 0, 0.05);
             padding: 2rem 1.2rem; display: flex; flex-direction: column; gap: 1.5rem; box-shadow: var(--shadow-soft); order: 2;
@@ -98,36 +91,36 @@
 
         .video-timer-container {
             position: relative; width: 100%; height: 440px; border-radius: var(--radius-lg); overflow: hidden;
-            background: #000; box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
+            background: var(--main-light); box-shadow: var(--shadow-soft); display: flex; align-items: center; justify-content: center;
+            border: 2px solid var(--main-color);
         }
         .video-timer-container video, .video-timer-container iframe {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border: none;
         }
         
         .timer-overlay-clean {
-            position: relative; z-index: 10; text-align: center; color: white;
-            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.85);
+            position: relative; z-index: 10; text-align: center; color: var(--text-dark);
             display: flex; flex-direction: column; align-items: center; gap: 1rem; width: 100%; height: 100%; justify-content: center;
         }
-        .timer-overlay-clean .timer-display { font-size: 5rem; font-weight: 700; line-height: 1; letter-spacing: 3px; }
+        .timer-overlay-clean .timer-display { font-size: 4.5rem; font-weight: 700; line-height: 1; letter-spacing: 2px; color: var(--text-dark); }
 
         .fullscreen-icon-btn {
-            position: absolute; top: 15px; left: 15px; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3);
-            color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 1.1rem; backdrop-filter: blur(5px); z-index: 20; transition: 0.2s;
+            position: absolute; top: 15px; left: 15px; background: var(--white); border: 1px solid var(--main-color);
+            color: var(--text-dark); width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.1rem; z-index: 20; transition: 0.2s;
         }
-        .fullscreen-icon-btn:hover { background: rgba(0,0,0,0.8); }
+        .fullscreen-icon-btn:hover { background: var(--main-color); }
 
         .select-task-dropdown {
-            background: rgba(0, 0, 0, 0.55); color: white; border: 1px solid rgba(255, 255, 255, 0.4);
+            background: var(--white); color: var(--text-dark); border: 1px solid var(--main-color);
             padding: 0.6rem 1.2rem; border-radius: 20px; outline: none; font-size: 0.95rem; font-weight: bold;
-            backdrop-filter: blur(5px); cursor: pointer; width: 280px; text-align: center;
+            cursor: pointer; width: 280px; text-align: center;
         }
-        .select-task-dropdown option { background: var(--text-dark); color: white; }
+        .select-task-dropdown option { background: var(--white); color: var(--text-dark); }
 
         .round-counter-badge {
-            font-size: 0.85rem; font-weight: bold; background: rgba(255, 255, 255, 0.25);
-            padding: 0.3rem 0.9rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(5px);
+            font-size: 0.85rem; font-weight: bold; background: var(--white); color: var(--text-dark);
+            padding: 0.3rem 0.9rem; border-radius: 15px; border: 1px solid var(--main-color);
         }
         
         .ambience-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; align-items: center; }
@@ -180,24 +173,17 @@
 <body>
 
     <input type="file" id="videoUploader" accept="video/*" style="display: none;" onchange="handleVideoUpload(event)">
+    <input type="file" id="musicUploader" accept="audio/*" style="display: none;" onchange="handleMusicUpload(event)">
+    <audio id="bgMusicPlayer" loop style="display:none;"></audio>
 
     <div id="authOverlay" class="overlay-screen">
         <div class="auth-card">
-            <h2>منصة RAS التفاعلية 🌸</h2>
+            <h2>يارب امتياز 🌸</h2>
             <p style="font-size: 0.85rem; color: var(--text-muted);">سجّلي دخولكِ بحساب Google الحقيقي لبدء التحدي.</p>
             <button class="google-btn-single" id="loginBtn">
                 <i class="lni lni-google"></i>
                 <span>تسجيل الدخول بحساب Google</span>
             </button>
-        </div>
-    </div>
-
-    <div id="roleSelectionOverlay" class="overlay-screen" style="display: none;">
-        <div class="auth-card">
-            <h2>أهلاً بكِ في التحدي! ✨</h2>
-            <p style="font-size: 0.9rem; color: var(--text-muted);">الموقع اتعرف على حسابكِ، اختر اسمكِ وتخصصكِ لمرة واحدة فقط:</p>
-            <button class="role-btn" onclick="assignUserRole('أسنان 🦷 (آلاء)')"><span>🦷 أنا آلاء (طب أسنان)</span></button>
-            <button class="role-btn" onclick="assignUserRole('عمارة 📐 (رزان)')"><span>📐 أنا رزان (عمارة)</span></button>
         </div>
     </div>
 
@@ -248,7 +234,7 @@
                 <div style="display:flex; gap:1.5rem;" id="friendsOnlineContainer"></div>
             </section>
 
-            <!-- الورد والروتين اليومي (مشترك للجميع) - تم نقله هنا تحت حالة الصديقات مباشرة -->
+            <!-- الورد والروتين اليومي (مشترك للجميع) -->
             <section class="card-box">
                 <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
                 <div class="habits-grid" id="habitsContainer"></div>
@@ -270,7 +256,7 @@
                 </div>
             </section>
 
-            <!-- حديقة النباتات وسقيها بالمذاكرة + رؤية حدائق الصديقات -->
+            <!-- حديقة النباتات وسقيها بالمذاكرة -->
             <section class="card-box" style="background: var(--main-light); border: 2px solid var(--main-color);">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
                     <h3>🌱 حديقتك النباتية الخاصة</h3>
@@ -291,12 +277,9 @@
                     <span id="plantPointsInfo" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">النقاط الحالية المسجلة للنبتة: 0 نقطة</span>
                 </div>
 
-                <!-- قسم زيارة حدائق الصديقات -->
                 <div id="friendsGardenView" style="display: none; background: var(--white); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--main-color);">
                     <h4 style="margin-bottom: 1rem;">🌸 حدائق الصديقات (انظري لإنجازاتهن):</h4>
-                    <div id="friendsGardensList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
-                        <!-- يتم جلب حدائق الصديقات هنا عبر Firebase -->
-                    </div>
+                    <div id="friendsGardensList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;"></div>
                 </div>
             </section>
 
@@ -334,7 +317,7 @@
                     <strong>🧠 جلسة بومودورو نشطة الآن:</strong>
                     <span id="livePomodoroUser">جاري المذاكرة...</span>
                 </div>
-                <div id="livePomodoroTime" style="font-size: 1.2rem; font-weight: bold; color: #D63031;">00:00</div>
+                <div id="livePomodoroTime" style="font-size: 1.2rem; font-weight: bold; color: #D63031;">00:00:00</div>
             </section>
 
             <section class="card-box">
@@ -400,6 +383,10 @@
                 <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
             </div>
             
+            <div class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
+                <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="nursingTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
+            </div>
+
             <div class="grid-2col">
                 <div class="card-box">
                     <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
@@ -424,25 +411,27 @@
 
             <div class="video-timer-container" id="nursingContainer">
                 <button class="fullscreen-icon-btn" onclick="toggleFullscreen('nursingContainer')" title="تكبير الشاشة">⛶</button>
-                <video id="nursingVideoPlayer" autoplay loop muted style="display:none;"></video>
-                <iframe id="nursingAmbienceIframe" src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&mute=1&loop=1&playlist=5qap5aO4i9A" allow="autoplay; encrypted-media"></iframe>
+                <video id="nursingVideoPlayer" loop playsinline style="display:none;"></video>
+                <iframe id="nursingAmbienceIframe" src="https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1&loop=1&playlist=5qap5aO4i9A" allow="autoplay; encrypted-media"></iframe>
                 <div class="timer-overlay-clean">
                     <select id="nursingTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
                     <div style="display:flex; gap:0.6rem; align-items:center;">
                         <span id="nursingModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
                         <span id="nursingRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
-                    <div class="timer-display" id="nursingTimer">25:00</div>
+                    <div class="timer-display" id="nursingTimer">00:25:00</div>
                     <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="nursingStartBtn" onclick="togglePomodoro('nursing')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('nursing')">إعادة ضبط</button>
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="nursingStartBtn" onclick="togglePomodoro('nursing')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('nursing')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
 
             <div class="card-box">
                 <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="disableVideoAndTimerOnly('nursing')">⏱️ تايمر فقط (بدون فيديو)</button>
                     <button class="ambience-btn" onclick="triggerVideoUpload('nursing')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="triggerMusicUpload()">🎵 إضافة موسيقى / صوت</button>
                     <button class="ambience-btn" onclick="setAmbience('nursing', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('nursing', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
                     <button class="ambience-btn" onclick="setAmbience('nursing', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
@@ -480,6 +469,10 @@
                 <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
             </div>
 
+            <div class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
+                <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="dentistryTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
+            </div>
+
             <div class="grid-2col">
                 <div class="card-box">
                     <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
@@ -504,25 +497,27 @@
 
             <div class="video-timer-container" id="dentistryContainer">
                 <button class="fullscreen-icon-btn" onclick="toggleFullscreen('dentistryContainer')" title="تكبير الشاشة">⛶</button>
-                <video id="dentistryVideoPlayer" autoplay loop muted style="display:none;"></video>
-                <iframe id="dentistryAmbienceIframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&mute=1&loop=1&playlist=jfKfPfyJRdk" allow="autoplay; encrypted-media"></iframe>
+                <video id="dentistryVideoPlayer" loop playsinline style="display:none;"></video>
+                <iframe id="dentistryAmbienceIframe" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1&loop=1&playlist=jfKfPfyJRdk" allow="autoplay; encrypted-media"></iframe>
                 <div class="timer-overlay-clean">
                     <select id="dentistryTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
                     <div style="display:flex; gap:0.6rem; align-items:center;">
                         <span id="dentistryModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
                         <span id="dentistryRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
-                    <div class="timer-display" id="dentistryTimer">25:00</div>
+                    <div class="timer-display" id="dentistryTimer">00:25:00</div>
                     <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="dentistryStartBtn" onclick="togglePomodoro('dentistry')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('dentistry')">إعادة ضبط</button>
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="dentistryStartBtn" onclick="togglePomodoro('dentistry')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('dentistry')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
 
             <div class="card-box">
                 <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="disableVideoAndTimerOnly('dentistry')">⏱️ تايمر فقط (بدون فيديو)</button>
                     <button class="ambience-btn" onclick="triggerVideoUpload('dentistry')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="triggerMusicUpload()">🎵 إضافة موسيقى / صوت</button>
                     <button class="ambience-btn" onclick="setAmbience('dentistry', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('dentistry', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
                     <button class="ambience-btn" onclick="setAmbience('dentistry', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
@@ -560,6 +555,10 @@
                 <button class="btn-action" style="background:var(--main-light); color:var(--text-dark); border:1px solid var(--main-color);" onclick="showPage('homePage')">← الرئيسية</button>
             </div>
 
+            <div class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
+                <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="architectureTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
+            </div>
+
             <div class="grid-2col">
                 <div class="card-box">
                     <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
@@ -584,25 +583,27 @@
 
             <div class="video-timer-container" id="architectureContainer">
                 <button class="fullscreen-icon-btn" onclick="toggleFullscreen('architectureContainer')" title="تكبير الشاشة">⛶</button>
-                <video id="architectureVideoPlayer" autoplay loop muted style="display:none;"></video>
-                <iframe id="architectureAmbienceIframe" src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&mute=1&loop=1&playlist=L_LUpnjgPso" allow="autoplay; encrypted-media"></iframe>
+                <video id="architectureVideoPlayer" loop playsinline style="display:none;"></video>
+                <iframe id="architectureAmbienceIframe" src="https://www.youtube.com/embed/L_LUpnjgPso?autoplay=1&loop=1&playlist=L_LUpnjgPso" allow="autoplay; encrypted-media"></iframe>
                 <div class="timer-overlay-clean">
                     <select id="architectureTaskSelect" class="select-task-dropdown"><option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option></select>
                     <div style="display:flex; gap:0.6rem; align-items:center;">
                         <span id="architectureModeBadge" class="round-counter-badge">🧠 وضع التركيز</span>
                         <span id="architectureRoundCounter" class="round-counter-badge">الجولة: 1 / 4</span>
                     </div>
-                    <div class="timer-display" id="architectureTimer">45:00</div>
+                    <div class="timer-display" id="architectureTimer">00:45:00</div>
                     <div style="display:flex; gap:1rem;">
-                        <button class="btn-action" style="background:white; color:var(--text-dark); font-size:1.1rem; padding:0.7rem 1.8rem;" id="architectureStartBtn" onclick="togglePomodoro('architecture')">بدء الجلسة</button>
-                        <button class="btn-action" style="background:rgba(0,0,0,0.5); color:white; font-size:1rem;" onclick="resetPomodoro('architecture')">إعادة ضبط</button>
+                        <button class="btn-action" style="background:var(--text-dark); color:var(--white); font-size:1.1rem; padding:0.7rem 1.8rem;" id="architectureStartBtn" onclick="togglePomodoro('architecture')">بدء الجلسة</button>
+                        <button class="btn-action" style="background:rgba(0,0,0,0.1); color:var(--text-dark); font-size:1rem; border:1px solid var(--main-color);" onclick="resetPomodoro('architecture')">إعادة ضبط</button>
                     </div>
                 </div>
             </div>
 
             <div class="card-box">
                 <div class="ambience-controls">
+                    <button class="ambience-btn" onclick="disableVideoAndTimerOnly('architecture')">⏱️ تايمر فقط (بدون فيديو)</button>
                     <button class="ambience-btn" onclick="triggerVideoUpload('architecture')">📁 رفع فيديو</button>
+                    <button class="ambience-btn" onclick="triggerMusicUpload()">🎵 إضافة موسيقى / صوت</button>
                     <button class="ambience-btn" onclick="setAmbience('architecture', '5qap5aO4i9A')">🌧️ مطر هادئ</button>
                     <button class="ambience-btn" onclick="setAmbience('architecture', 'jfKfPfyJRdk')">☕ Lo-Fi Cafe</button>
                     <button class="ambience-btn" onclick="setAmbience('architecture', 'L_LUpnjgPso')">🌊 بحر هادئ</button>
@@ -656,7 +657,6 @@
         const provider = new GoogleAuthProvider();
 
         window.currentUser = null;
-        window.tempUserObj = null;
         window.db = db;
 
         document.getElementById('loginBtn').addEventListener('click', async () => {
@@ -677,29 +677,19 @@
         });
 
         async function processUserLogin(user) {
-            const userDocRef = doc(db, "users", user.uid);
-            const userSnap = await getDoc(userDocRef);
+            const email = user.email.toLowerCase();
+            let assignedRole = "تمريض 🩺 (سارة)";
 
-            if (user.email.toLowerCase() === "sarasaro1029@gmail.com") {
-                saveAndInitializeUser(user, "تمريض 🩺 (سارة)");
-                return;
+            if (email === "razan202mohamed@gmail.com") {
+                assignedRole = "عمارة 📐 (رزان)";
+            } else if (email === "alaa20302007@gmail.com") {
+                assignedRole = "أسنان 🦷 (آلاء)";
+            } else if (email === "sarasaro1029@gmail.com") {
+                assignedRole = "تمريض 🩺 (سارة)";
             }
 
-            if (userSnap.exists() && userSnap.data().role) {
-                saveAndInitializeUser(user, userSnap.data().role);
-            } else {
-                window.tempUserObj = user;
-                document.getElementById('authOverlay').style.display = 'none';
-                document.getElementById('roleSelectionOverlay').style.display = 'flex';
-            }
+            await saveAndInitializeUser(user, assignedRole);
         }
-
-        window.assignUserRole = async function(selectedRole) {
-            if (window.tempUserObj) {
-                await saveAndInitializeUser(window.tempUserObj, selectedRole);
-                document.getElementById('roleSelectionOverlay').style.display = 'none';
-            }
-        };
 
         async function saveAndInitializeUser(user, role) {
             window.currentUser = {
@@ -762,12 +752,14 @@
                 snapshot.forEach((doc) => {
                     const friend = doc.data();
                     const pts = friend.points || 0;
-                    const hours = (pts / 60).toFixed(1);
+                    const h = Math.floor(pts / 60);
+                    const m = pts % 60;
+
                     const plant = friend.plantIcon || '🌱';
                     const plantTitle = friend.plantName || 'بذرة صغيرة';
 
                     if(window.currentUser && friend.email === window.currentUser.email) {
-                        document.getElementById('userTotalHoursText').innerText = `${pts} نقطة (${hours} ساعة)`;
+                        document.getElementById('userTotalHoursText').innerText = `${pts} نقطة (${h} ساعة و ${m} دقيقة)`;
                         const shopPoints = document.getElementById('shopUserPoints');
                         if(shopPoints) shopPoints.innerText = `رصيدك: ${pts} نقطة`;
 
@@ -788,7 +780,7 @@
                                 <img src="${friend.avatar}" class="user-avatar" style="width:30px; height:30px;">
                                 <span>${friend.name} (${friend.role})</span>
                             </div>
-                            <span style="color:#D63031; font-weight:bold;">⭐ ${pts} نقطة (${hours} ساعة)</span>
+                            <span style="color:#D63031; font-weight:bold;">⭐ ${pts} نقطة (${h}س ${m}د)</span>
                         </div>
                     `;
 
@@ -821,7 +813,7 @@
     </script>
 
     <script>
-        let totalDailyMinutes = 0;
+        let totalDailySeconds = 0;
         let sessionHistory = [];
         let currentActiveDomainForVideo = 'nursing';
 
@@ -959,11 +951,21 @@
             else if (document.exitFullscreen) document.exitFullscreen();
         }
 
+        function disableVideoAndTimerOnly(domain) {
+            const vid = document.getElementById(domain + 'VideoPlayer');
+            const iframe = document.getElementById(domain + 'AmbienceIframe');
+            if(vid) { vid.style.display = 'none'; vid.pause(); }
+            if(iframe) { iframe.style.display = 'none'; iframe.src = ''; }
+        }
+
         function setAmbience(domain, videoId) {
             const vid = document.getElementById(domain + 'VideoPlayer');
             const iframe = document.getElementById(domain + 'AmbienceIframe');
             if(vid) { vid.style.display = 'none'; vid.pause(); }
-            if(iframe) { iframe.style.display = 'block'; iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}`; }
+            if(iframe) { 
+                iframe.style.display = 'block'; 
+                iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&loop=1&playlist=${videoId}`; 
+            }
         }
 
         function loadCustomYoutube(domain) {
@@ -986,7 +988,27 @@
                 const iframe = document.getElementById(domain + 'AmbienceIframe');
                 if(iframe) { iframe.style.display = 'none'; iframe.src = ''; }
                 const vid = document.getElementById(domain + 'VideoPlayer');
-                if(vid) { vid.style.display = 'block'; vid.src = videoUrl; vid.play(); }
+                if(vid) { 
+                    vid.style.display = 'block'; 
+                    vid.src = videoUrl; 
+                    vid.controls = true;
+                    vid.play(); 
+                }
+            }
+        }
+
+        function triggerMusicUpload() {
+            document.getElementById('musicUploader').click();
+        }
+
+        function handleMusicUpload(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const musicUrl = URL.createObjectURL(file);
+                const audio = document.getElementById('bgMusicPlayer');
+                audio.src = musicUrl;
+                audio.play();
+                alert("🎵 تمت إضافة وتشغيل الموسيقى الخلفية بنجاح!");
             }
         }
 
@@ -1021,9 +1043,13 @@
 
         function updatePomodoroUI(domain) {
             const p = pomodoroTimers[domain];
-            let m = Math.floor(p.seconds / 60), s = p.seconds % 60;
+            let h = Math.floor(p.seconds / 3600);
+            let m = Math.floor((p.seconds % 3600) / 60);
+            let s = p.seconds % 60;
+            
             const timerEl = document.getElementById(domain + 'Timer');
-            if(timerEl) timerEl.innerText = `${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+            if(timerEl) timerEl.innerText = `${h < 10 ? '0':''}${h}:${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+            
             const roundEl = document.getElementById(domain + 'RoundCounter');
             if(roundEl) roundEl.innerText = `الجولة: ${p.currentRound} / ${p.roundsTarget}`;
 
@@ -1041,6 +1067,8 @@
             const liveBar = document.getElementById('livePomodoroSection');
             const taskSelect = document.getElementById(domain + 'TaskSelect');
             const taskName = taskSelect ? taskSelect.options[taskSelect.selectedIndex].text : 'مذاكرة';
+            
+            const vid = document.getElementById(domain + 'VideoPlayer');
 
             if (!p.running) {
                 p.running = true;
@@ -1048,16 +1076,21 @@
                 liveBar.style.display = 'flex';
                 document.getElementById('livePomodoroUser').innerText = `${window.currentUser ? window.currentUser.name : 'سارة'} تذاكر (${taskName})`;
 
+                if(vid && vid.style.display !== 'none') vid.play();
+
                 p.interval = setInterval(() => {
                     if (p.seconds > 0) {
                         p.seconds--;
                         updatePomodoroUI(domain);
-                        let m = Math.floor(p.seconds / 60), s = p.seconds % 60;
-                        document.getElementById('livePomodoroTime').innerText = `${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
+                        let h = Math.floor(p.seconds / 3600);
+                        let m = Math.floor((p.seconds % 3600) / 60);
+                        let s = p.seconds % 60;
+                        document.getElementById('livePomodoroTime').innerText = `${h < 10 ? '0':''}${h}:${m < 10 ? '0':''}${m}:${s < 10 ? '0':''}${s}`;
                     } else {
                         clearInterval(p.interval);
                         p.running = false;
                         btn.innerText = 'بدء الجلسة';
+                        if(vid) vid.pause();
 
                         if (p.mode === 'work') {
                             logCompletedSession(domain, p.workMins, taskName);
@@ -1076,15 +1109,31 @@
                     }
                 }, 1000);
             } else {
-                clearInterval(p.interval); p.running = false; btn.innerText = 'استئناف';
+                clearInterval(p.interval); 
+                p.running = false; 
+                btn.innerText = 'استئناف';
+                if(vid) vid.pause();
             }
         }
 
-        function resetPomodoro(domain) { applyCustomPomodoro(domain); }
+        function resetPomodoro(domain) { 
+            applyCustomPomodoro(domain); 
+            const vid = document.getElementById(domain + 'VideoPlayer');
+            if(vid) { vid.pause(); vid.currentTime = 0; }
+        }
 
         async function logCompletedSession(domain, mins, taskTitle) {
-            totalDailyMinutes += mins;
-            document.getElementById('dailyProgressBar').style.width = Math.min(100, Math.round((totalDailyMinutes / 240) * 100)) + '%';
+            totalDailySeconds += (mins * 60);
+            
+            let sh = Math.floor(totalDailySeconds / 3600);
+            let sm = Math.floor((totalDailySeconds % 3600) / 60);
+            let ss = totalDailySeconds % 60;
+            
+            const totalText = `${sh} ساعة ${sm} دقيقة ${ss} ثانية`;
+            const displayEl = document.getElementById(`${domain}TotalStudiedToday`);
+            if(displayEl) displayEl.innerText = totalText;
+
+            document.getElementById('dailyProgressBar').style.width = Math.min(100, Math.round((totalDailySeconds / 14400) * 100)) + '%';
 
             if(window.currentUser && window.db) {
                 const { doc, updateDoc, increment } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
