@@ -140,7 +140,7 @@
         .pomodoro-controls { display: flex; gap: 0.8rem; justify-content: center; align-items: center; flex-wrap: wrap; background: var(--main-light); border: 1px solid var(--main-color); padding: 1rem; border-radius: var(--radius-md); }
         .time-input-group { display: flex; flex-direction: column; align-items: center; gap: 0.2rem; }
         .time-input-group label { font-size: 0.75rem; color: var(--text-dark); font-weight: bold; }
-        .time-input-group input { width: 65px; padding: 0.4rem; border: 1px solid var(--main-color); border-radius: 8px; text-align: center; font-weight: bold; background: var(--white); color: var(--text-dark); }
+        .time-input-group input, .time-input-group select { width: 90px; padding: 0.4rem; border: 1px solid var(--main-color); border-radius: 8px; text-align: center; font-weight: bold; background: var(--white); color: var(--text-dark); }
 
         .chat-box { height: 220px; background: var(--main-light); border: 1px solid var(--main-color); border-radius: var(--radius-md); padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.8rem; }
         .chat-message { max-width: 85%; padding: 0.8rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; line-height: 1.4; white-space: pre-wrap; }
@@ -151,8 +151,11 @@
         .btn-action:hover { opacity: 0.9; }
         .input-style { padding: 0.8rem; border: 1px solid var(--main-color); border-radius: var(--radius-md); outline: none; flex: 1; background: var(--white); color: var(--text-dark); }
 
+        .prayer-section-box { background: var(--main-light); border: 1px solid var(--main-color); padding: 1rem; border-radius: var(--radius-md); display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.8rem; }
+        .prayer-section-box h4 { font-size: 1rem; color: var(--text-dark); display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px dashed var(--main-color); padding-bottom: 0.4rem; }
+        
         .task-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem; }
-        .task-item { display: flex; justify-content: space-between; align-items: center; background: var(--main-light); border: 1px solid var(--main-color); padding: 0.6rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; }
+        .task-item { display: flex; justify-content: space-between; align-items: center; background: var(--white); border: 1px solid var(--main-color); padding: 0.6rem 1rem; border-radius: var(--radius-md); font-size: 0.9rem; }
         .task-item.completed { text-decoration: line-through; opacity: 0.6; }
 
         .shop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; max-height: 450px; overflow-y: auto; padding: 0.5rem; }
@@ -192,8 +195,10 @@
         <div id="currentUserBadge" class="user-badge" style="padding: 0.8rem; border-radius: var(--radius-md);"></div>
 
         <ul class="nav-menu">
-            <li id="nav-homePage" class="nav-item active" onclick="showPage('homePage', this)"><i class="lni lni-grid-alt"></i> الرئيسية والحديقة</li>
-            <li id="nav-shopPage" class="nav-item" onclick="showPage('shopPage', this)"><i class="lni lni-gift"></i> متجر النباتات والبذور</li>
+            <li id="nav-homePage" class="nav-item active" onclick="showPage('homePage', this)"><i class="lni lni-grid-alt"></i> الرئيسية</li>
+            <li id="nav-gardensPage" class="nav-item" onclick="showPage('gardensPage', this)"><i class="lni lni-flower"></i> حديقة النباتات والأشجار 🌱</li>
+            <li id="nav-shopPage" class="nav-item" onclick="showPage('shopPage', this)"><i class="lni lni-gift"></i> متجر البذور</li>
+            <li id="nav-examsPage" class="nav-item" onclick="showPage('examsPage', this)"><i class="lni lni-book"></i> امتحانات 📝</li>
             <li id="nav-nursingPage" class="nav-item" onclick="openDomain('nursing')"><i class="lni lni-first-aid"></i> التمريض (سارة)</li>
             <li id="nav-dentistryPage" class="nav-item" onclick="openDomain('dentistry')"><i class="lni lni-protection"></i> الأسنان (آلاء)</li>
             <li id="nav-architecturePage" class="nav-item" onclick="openDomain('architecture')"><i class="lni lni-ruler-pencil"></i> العمارة (رزان)</li>
@@ -228,18 +233,6 @@
                 </div>
             </div>
 
-            <!-- حالة الصديقات (Online / Offline) -->
-            <section class="card-box">
-                <h3><i class="lni lni-users"></i> حالة الصديقات (Online / Offline)</h3>
-                <div style="display:flex; gap:1.5rem;" id="friendsOnlineContainer"></div>
-            </section>
-
-            <!-- الورد والروتين اليومي (مشترك للجميع) -->
-            <section class="card-box">
-                <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
-                <div class="habits-grid" id="habitsContainer"></div>
-            </section>
-
             <!-- سجل الإنجاز الأسبوعي والسنوي -->
             <section class="card-box" style="background: var(--main-light); border: 1px solid var(--main-color);">
                 <h3><i class="lni lni-calendar"></i> سجل الإنجاز الأسبوعي والسنوي 📊</h3>
@@ -256,31 +249,10 @@
                 </div>
             </section>
 
-            <!-- حديقة النباتات وسقيها بالمذاكرة -->
-            <section class="card-box" style="background: var(--main-light); border: 2px solid var(--main-color);">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
-                    <h3>🌱 حديقتك النباتية الخاصة</h3>
-                    <div style="display: flex; gap: 0.5rem;">
-                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="switchGardenView('my')">حديقتي 🌿</button>
-                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; background: var(--white); color: var(--text-dark); border: 1px solid var(--main-color);" onclick="switchGardenView('friends')">زيارة حدائق الصديقات 🌸</button>
-                    </div>
-                </div>
-                <p style="font-size: 0.9rem; color: var(--text-muted);">كلما ذاكرتِ وسجلتِ نقاطاً، تنمو نبتتك وتكبر وتزهر بشكل جميل حتى تصبح شجرة عملاقة!</p>
-                
-                <div id="myGardenView" style="background: var(--white); padding: 2rem; border-radius: var(--radius-md); border: 1px solid var(--main-color); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 250px;">
-                    <div id="plantVisual" style="font-size: 4.5rem; animation: bounce 2s infinite;">🌱</div>
-                    <h4 id="plantNameDisplay" style="margin-top: 0.8rem; color: var(--text-dark);">نبتتك الحالية: بذرة صغيرة</h4>
-                    <p id="plantStageDesc" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">تحتاجين إلى جلسات مذاكرة لسقيها وجعلها تكبر!</p>
-                    <div style="margin-top: 1rem; width: 100%; max-width: 300px; background: rgba(0,0,0,0.05); height: 12px; border-radius: 6px; overflow: hidden;">
-                        <div id="plantProgressBar" style="width: 10%; height: 100%; background: #00B894; transition: width 0.4s;"></div>
-                    </div>
-                    <span id="plantPointsInfo" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">النقاط الحالية المسجلة للنبتة: 0 نقطة</span>
-                </div>
-
-                <div id="friendsGardenView" style="display: none; background: var(--white); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--main-color);">
-                    <h4 style="margin-bottom: 1rem;">🌸 حدائق الصديقات (انظري لإنجازاتهن):</h4>
-                    <div id="friendsGardensList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;"></div>
-                </div>
+            <!-- الورد والروتين اليومي -->
+            <section class="card-box">
+                <h3><i class="lni lni-sun"></i> الورد والروتين اليومي (مشترك للجميع)</h3>
+                <div class="habits-grid" id="habitsContainer"></div>
             </section>
 
             <section class="grid-2col">
@@ -345,6 +317,37 @@
             </section>
         </div>
 
+        <!-- صفحة الحدائق -->
+        <div id="gardensPage" class="page">
+            <h2>🌱 حديقة النباتات والأشجار الخاصة بكن</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">شاهدن نمو نبتاتكن وحدائقكن بفضل جلسات المذاكرة والاجتهاد:</p>
+
+            <div class="card-box" style="background: var(--main-light); border: 2px solid var(--main-color);">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                    <h3>🌿 نبتتك الخاصة</h3>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="switchGardenView('my')">حديقتي 🌿</button>
+                        <button class="btn-action" style="padding: 0.4rem 0.8rem; font-size: 0.85rem; background: var(--white); color: var(--text-dark); border: 1px solid var(--main-color);" onclick="switchGardenView('friends')">حدائق الصديقات 🌸</button>
+                    </div>
+                </div>
+                
+                <div id="myGardenView" style="background: var(--white); padding: 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--main-color); text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 280px;">
+                    <div id="plantVisual" style="font-size: 5rem; animation: bounce 2s infinite;">🌱</div>
+                    <h4 id="plantNameDisplay" style="margin-top: 0.8rem; color: var(--text-dark);">نبتتك الحالية: بذرة صغيرة</h4>
+                    <p id="plantStageDesc" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">تحتاجين إلى جلسات مذاكرة لسقيها وجعلها تكبر!</p>
+                    <div style="margin-top: 1rem; width: 100%; max-width: 300px; background: rgba(0,0,0,0.05); height: 12px; border-radius: 6px; overflow: hidden;">
+                        <div id="plantProgressBar" style="width: 10%; height: 100%; background: #00B894; transition: width 0.4s;"></div>
+                    </div>
+                    <span id="plantPointsInfo" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">النقاط الحالية المسجلة للنبتة: 0 نقطة</span>
+                </div>
+
+                <div id="friendsGardenView" style="display: none; background: var(--white); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--main-color);">
+                    <h4 style="margin-bottom: 1rem;">🌸 حدائق الصديقات (انظري لإنجازاتهن):</h4>
+                    <div id="friendsGardensList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+
         <div id="shopPage" class="page">
             <div style="display:flex; justify-content:space-between; align-items:center;">
                 <h2>🎁 متجر بذور النباتات والأشجار (الـ 20 نبتة)</h2>
@@ -376,6 +379,44 @@
             </div>
         </div>
 
+        <!-- صفحة الامتحانات -->
+        <div id="examsPage" class="page">
+            <h2>📝 جدول الامتحانات والمواعيد (لكل التخصصات)</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">كل واحدة منكن لها خانة مستقلة بألوان باستيل هادية وجميلة عشان تنظموا امتحاناتكم براحتكم:</p>
+            
+            <div class="grid-3col">
+                <div class="card-box" style="background: #E8F8F5; border: 2px solid #A3E4D7;">
+                    <h3 style="color: #117A65;">🩺 سارة (تمريض)</h3>
+                    <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+                        <input type="text" id="examInput-sara" class="input-style" style="background: #FFFFFF; border-color: #A3E4D7;" placeholder="امتحان/مهمة سارة...">
+                        <input type="date" id="examDate-sara" class="input-style" style="background: #FFFFFF; border-color: #A3E4D7;">
+                        <button class="btn-action" style="background:#48C9B0; color:white;" onclick="addExamForUser('sara')">إضافة لامتحانات سارة 📌</button>
+                    </div>
+                    <ul id="examsList-sara" class="task-list" style="margin-top: 1rem;"></ul>
+                </div>
+
+                <div class="card-box" style="background: #EBF5FB; border: 2px solid #AED6F1;">
+                    <h3 style="color: #1B4F72;">🦷 آلاء (طب الأسنان)</h3>
+                    <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+                        <input type="text" id="examInput-alaa" class="input-style" style="background: #FFFFFF; border-color: #AED6F1;" placeholder="امتحان/مهمة آلاء...">
+                        <input type="date" id="examDate-alaa" class="input-style" style="background: #FFFFFF; border-color: #AED6F1;">
+                        <button class="btn-action" style="background:#5499C7; color:white;" onclick="addExamForUser('alaa')">إضافة لامتحانات آلاء 📌</button>
+                    </div>
+                    <ul id="examsList-alaa" class="task-list" style="margin-top: 1rem;"></ul>
+                </div>
+
+                <div class="card-box" style="background: #FEF9E7; border: 2px solid #F9E79F;">
+                    <h3 style="color: #7D6608;">📐 رزان (عمارة)</h3>
+                    <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+                        <input type="text" id="examInput-razan" class="input-style" style="background: #FFFFFF; border-color: #F9E79F;" placeholder="امتحان/مهمة رزان...">
+                        <input type="date" id="examDate-razan" class="input-style" style="background: #FFFFFF; border-color: #F9E79F;">
+                        <button class="btn-action" style="background:#F4D03F; color:#5D4037;" onclick="addExamForUser('razan')">إضافة لامتحانات رزان 📌</button>
+                    </div>
+                    <ul id="examsList-razan" class="task-list" style="margin-top: 1rem;"></ul>
+                </div>
+            </div>
+        </div>
+
         <!-- قسم التمريض -->
         <div id="nursingPage" class="page">
             <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -387,23 +428,50 @@
                 <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="nursingTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
             </div>
 
+            <!-- إنجازات اليوم وملاحظات سريعة فوق خالص -->
             <div class="grid-2col">
-                <div class="card-box">
-                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
-                    <textarea id="quickNotesArea-nursing" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص التمريض..." oninput="saveDomainData('nursing', 'notes')"></textarea>
-                </div>
                 <div class="card-box">
                     <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
                     <textarea id="dailyWinsArea-nursing" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في التمريض..." oninput="saveDomainData('nursing', 'wins')"></textarea>
                 </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-nursing" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص التمريض..." oninput="saveDomainData('nursing', 'notes')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية للتمريض</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="nursing-day-0" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="nursing-day-1" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="nursing-day-2" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="nursing-day-3" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="nursing-day-4" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="nursing-day-5" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="nursing-day-6" oninput="saveWeeklyPlans('nursing')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>🕌 مهام اليوم مرتبة بين الصلوات (مع الوقت المتوقع)</h3>
+                <div id="nursingPrayersContainer"></div>
             </div>
 
             <div class="card-box" style="padding:1rem;">
                 <div class="pomodoro-controls">
-                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="nursingWorkMins" value="25" min="1" max="180"></div>
+                    <div class="time-input-group"><label>المذاكرة (د.)</label><input type="number" id="nursingWorkMins" value="25" min="1" max="180"></div>
                     <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="nursingBreakMins" value="5" min="1" max="60"></div>
                     <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="nursingRoundsTarget" value="4" min="1" max="12"></div>
                     <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="nursingLongBreakMins" value="15" min="1" max="120"></div>
+                    <div class="time-input-group">
+                        <label>صوت التنبيه</label>
+                        <select id="nursingAlarmSound" onchange="changeAlarmSound('nursing', this.value)">
+                            <option value="beep">صفارة كلاسيكية</option>
+                            <option value="bell">جرس رقيق</option>
+                            <option value="chime">نغمة موسيقية</option>
+                        </select>
+                    </div>
                     <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('nursing')">تطبيق</button>
                     <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('nursing', 5)">☕ استراحة سريعة</button>
                 </div>
@@ -441,25 +509,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card-box">
-                <h3>📅 الخطة الأسبوعية للتمريض</h3>
-                <div class="weekly-grid">
-                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="nursing-day-0" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="nursing-day-1" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="nursing-day-2" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="nursing-day-3" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="nursing-day-4" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="nursing-day-5" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="nursing-day-6" oninput="saveWeeklyPlans('nursing')"></textarea></div>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <h3>مهام التمريض اليومية</h3>
-                <div style="display:flex; gap:0.5rem;"><input type="text" id="nursingTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="nursingTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('nursing')">إضافة</button></div>
-                <ul id="nursingTaskList" class="task-list"></ul>
-            </div>
         </div>
 
         <!-- قسم طب الأسنان -->
@@ -473,23 +522,50 @@
                 <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="dentistryTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
             </div>
 
+            <!-- إنجازات اليوم وملاحظات سريعة فوق خالص -->
             <div class="grid-2col">
-                <div class="card-box">
-                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
-                    <textarea id="quickNotesArea-dentistry" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص الأسنان..." oninput="saveDomainData('dentistry', 'notes')"></textarea>
-                </div>
                 <div class="card-box">
                     <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
                     <textarea id="dailyWinsArea-dentistry" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في الأسنان..." oninput="saveDomainData('dentistry', 'wins')"></textarea>
                 </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-dentistry" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص الأسنان..." oninput="saveDomainData('dentistry', 'notes')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية لطب الأسنان</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="dentistry-day-0" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="dentistry-day-1" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="dentistry-day-2" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="dentistry-day-3" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="dentistry-day-4" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="dentistry-day-5" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="dentistry-day-6" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>🕌 مهام اليوم مرتبة بين الصلوات (مع الوقت المتوقع)</h3>
+                <div id="dentistryPrayersContainer"></div>
             </div>
 
             <div class="card-box" style="padding:1rem;">
                 <div class="pomodoro-controls">
-                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="dentistryWorkMins" value="25" min="1" max="180"></div>
+                    <div class="time-input-group"><label>المذاكرة (د.)</label><input type="number" id="dentistryWorkMins" value="25" min="1" max="180"></div>
                     <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="dentistryBreakMins" value="5" min="1" max="60"></div>
                     <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="dentistryRoundsTarget" value="4" min="1" max="12"></div>
                     <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="dentistryLongBreakMins" value="15" min="1" max="120"></div>
+                    <div class="time-input-group">
+                        <label>صوت التنبيه</label>
+                        <select id="dentistryAlarmSound" onchange="changeAlarmSound('dentistry', this.value)">
+                            <option value="beep">صفارة كلاسيكية</option>
+                            <option value="bell">جرس رقيق</option>
+                            <option value="chime">نغمة موسيقية</option>
+                        </select>
+                    </div>
                     <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('dentistry')">تطبيق</button>
                     <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('dentistry', 5)">☕ استراحة سريعة</button>
                 </div>
@@ -527,25 +603,6 @@
                     </div>
                 </div>
             </div>
-
-            <div class="card-box">
-                <h3>📅 الخطة الأسبوعية لطب الأسنان</h3>
-                <div class="weekly-grid">
-                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="dentistry-day-0" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="dentistry-day-1" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="dentistry-day-2" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="dentistry-day-3" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="dentistry-day-4" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="dentistry-day-5" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="dentistry-day-6" oninput="saveWeeklyPlans('dentistry')"></textarea></div>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <h3>مهام طب الأسنان اليومية</h3>
-                <div style="display:flex; gap:0.5rem;"><input type="text" id="dentistryTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="dentistryTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('dentistry')">إضافة</button></div>
-                <ul id="dentistryTaskList" class="task-list"></ul>
-            </div>
         </div>
 
         <!-- قسم العمارة -->
@@ -559,23 +616,50 @@
                 <h3>⏱️ إجمالي ما ذاكرتيه اليوم: <span id="architectureTotalStudiedToday" style="color: #D63031;">0 ساعة 0 دقيقة 0 ثانية</span></h3>
             </div>
 
+            <!-- إنجازات اليوم وملاحظات سريعة فوق خالص -->
             <div class="grid-2col">
-                <div class="card-box">
-                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
-                    <textarea id="quickNotesArea-architecture" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص العمارة..." oninput="saveDomainData('architecture', 'notes')"></textarea>
-                </div>
                 <div class="card-box">
                     <h3><i class="lni lni-star"></i> إنجازات اليوم ✨</h3>
                     <textarea id="dailyWinsArea-architecture" class="day-textarea" style="height: 100px;" placeholder="اكتبي إنجازك اليوم في العمارة..." oninput="saveDomainData('architecture', 'wins')"></textarea>
                 </div>
+                <div class="card-box">
+                    <h3><i class="lni lni-pencil-alt"></i> ملاحظات سريعة (Sticky Notes)</h3>
+                    <textarea id="quickNotesArea-architecture" class="day-textarea" style="height: 100px;" placeholder="اكتبي ملحوظة سريعة تخص العمارة..." oninput="saveDomainData('architecture', 'notes')"></textarea>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>📅 الخطة الأسبوعية لقسم العمارة</h3>
+                <div class="weekly-grid">
+                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="architecture-day-0" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="architecture-day-1" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="architecture-day-2" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="architecture-day-3" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="architecture-day-4" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="architecture-day-5" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="architecture-day-6" oninput="saveWeeklyPlans('architecture')"></textarea></div>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h3>🕌 مهام اليوم مرتبة بين الصلوات (مع الوقت المتوقع)</h3>
+                <div id="architecturePrayersContainer"></div>
             </div>
 
             <div class="card-box" style="padding:1rem;">
                 <div class="pomodoro-controls">
-                    <div class="time-input-group"><label>المذاكرة (دقيقة)</label><input type="number" id="architectureWorkMins" value="45" min="1" max="180"></div>
+                    <div class="time-input-group"><label>المذاكرة (د.)</label><input type="number" id="architectureWorkMins" value="45" min="1" max="180"></div>
                     <div class="time-input-group"><label>راحه قصيرة</label><input type="number" id="architectureBreakMins" value="10" min="1" max="60"></div>
                     <div class="time-input-group"><label>عدد الجولات</label><input type="number" id="architectureRoundsTarget" value="4" min="1" max="12"></div>
                     <div class="time-input-group"><label>راحه طويلة</label><input type="number" id="architectureLongBreakMins" value="20" min="1" max="120"></div>
+                    <div class="time-input-group">
+                        <label>صوت التنبيه</label>
+                        <select id="architectureAlarmSound" onchange="changeAlarmSound('architecture', this.value)">
+                            <option value="beep">صفارة كلاسيكية</option>
+                            <option value="bell">جرس رقيق</option>
+                            <option value="chime">نغمة موسيقية</option>
+                        </select>
+                    </div>
                     <button class="btn-action" style="background:var(--white); color:var(--text-dark); border:1px solid var(--main-color); align-self:flex-end;" onclick="applyCustomPomodoro('architecture')">تطبيق</button>
                     <button class="btn-action" style="background:#00B894; color:white; align-self:flex-end;" onclick="triggerQuickBreak('architecture', 10)">☕ استراحة سريعة</button>
                 </div>
@@ -612,25 +696,6 @@
                         <button class="btn-action" style="padding:0.3rem 0.8rem; font-size:0.8rem; background:var(--main-color); color:var(--text-dark);" onclick="loadCustomYoutube('architecture')">تشغيل</button>
                     </div>
                 </div>
-            </div>
-
-            <div class="card-box">
-                <h3>📅 الخطة الأسبوعية لقسم العمارة</h3>
-                <div class="weekly-grid">
-                    <div class="day-card"><strong>السبت</strong><textarea class="day-textarea" id="architecture-day-0" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الأحد</strong><textarea class="day-textarea" id="architecture-day-1" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الإثنين</strong><textarea class="day-textarea" id="architecture-day-2" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الثلاثاء</strong><textarea class="day-textarea" id="architecture-day-3" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الأربعاء</strong><textarea class="day-textarea" id="architecture-day-4" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الخميس</strong><textarea class="day-textarea" id="architecture-day-5" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                    <div class="day-card"><strong>الجمعة</strong><textarea class="day-textarea" id="architecture-day-6" oninput="saveWeeklyPlans('architecture')"></textarea></div>
-                </div>
-            </div>
-
-            <div class="card-box">
-                <h3>مهام العمارة اليومية</h3>
-                <div style="display:flex; gap:0.5rem;"><input type="text" id="architectureTaskText" class="input-style" placeholder="المهمة..."><input type="number" id="architectureTaskHours" class="input-style" style="max-width:80px;" placeholder="ساعات"><button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addTask('architecture')">إضافة</button></div>
-                <ul id="architectureTaskList" class="task-list"></ul>
             </div>
         </div>
 
@@ -700,17 +765,24 @@
                 role: role
             };
 
-            await setDoc(doc(db, "users", user.uid), {
-                name: user.displayName,
-                email: user.email,
-                avatar: user.photoURL,
-                role: role,
-                points: 0,
-                plantIcon: '🌱',
-                plantName: 'بذرة صغيرة',
-                online: true,
-                lastSeen: new Date()
-            }, { merge: true });
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    name: user.displayName,
+                    email: user.email,
+                    avatar: user.photoURL,
+                    role: role,
+                    points: 0,
+                    plantIcon: '🌱',
+                    plantName: 'بذرة صغيرة',
+                    online: true,
+                    lastSeen: new Date()
+                });
+            } else {
+                await setDoc(userRef, { online: true, lastSeen: new Date() }, { merge: true });
+            }
 
             document.getElementById('authOverlay').style.display = 'none';
             document.getElementById('currentUserBadge').innerHTML = `
@@ -743,14 +815,19 @@
             });
 
             onSnapshot(collection(db, "users"), (snapshot) => {
-                const container = document.getElementById('friendsOnlineContainer');
                 const leaderboard = document.getElementById('leaderboardContainer');
                 const friendsGardensContainer = document.getElementById('friendsGardensList');
-                if(!container || !leaderboard) return;
-                container.innerHTML = ''; leaderboard.innerHTML = ''; if(friendsGardensContainer) friendsGardensContainer.innerHTML = '';
+                if(!leaderboard) return;
+                leaderboard.innerHTML = ''; if(friendsGardensContainer) friendsGardensContainer.innerHTML = '';
 
+                let usersList = [];
                 snapshot.forEach((doc) => {
-                    const friend = doc.data();
+                    usersList.push(doc.data());
+                });
+
+                usersList.sort((a, b) => (b.points || 0) - (a.points || 0));
+
+                usersList.forEach((friend, index) => {
                     const pts = friend.points || 0;
                     const h = Math.floor(pts / 60);
                     const m = pts % 60;
@@ -767,16 +844,12 @@
                         updateMyPlantDisplay(pts, plant, plantTitle);
                     }
 
-                    container.innerHTML += `
-                        <div class="user-badge" style="padding:0.6rem 1rem; border-radius:var(--radius-md);">
-                            <img src="${friend.avatar}" class="user-avatar">
-                            <div><div>${friend.name}</div><div style="font-size:0.75rem; color:green;">${friend.role || 'متصل 🟢'}</div></div>
-                        </div>
-                    `;
+                    let rankMedal = index === 0 ? '👑' : (index === 1 ? '🥈' : '🥉');
 
                     leaderboard.innerHTML += `
                         <div class="leaderboard-item">
                             <div style="display:flex; align-items:center; gap:0.8rem;">
+                                <span>${rankMedal}</span>
                                 <img src="${friend.avatar}" class="user-avatar" style="width:30px; height:30px;">
                                 <span>${friend.name} (${friend.role})</span>
                             </div>
@@ -784,14 +857,15 @@
                         </div>
                     `;
 
-                    if(friendsGardensContainer && (!window.currentUser || friend.email !== window.currentUser.email)) {
+                    if(friendsGardensContainer) {
                         friendsGardensContainer.innerHTML += `
-                            <div style="background: var(--bg-color); border: 1px solid var(--main-color); padding: 1rem; border-radius: 12px; text-align: center;">
-                                <img src="${friend.avatar}" style="width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid var(--main-color); margin-bottom: 0.3rem;">
-                                <h5 style="color: var(--text-dark);">${friend.name}</h5>
-                                <div style="font-size: 2.5rem; margin: 0.3rem 0;">${plant}</div>
-                                <span style="font-size: 0.8rem; color: var(--text-muted); display: block;">${plantTitle}</span>
-                                <span style="font-size: 0.75rem; color: #D63031; font-weight: bold; margin-top: 0.3rem; display: block;">⭐ ${pts} نقطة</span>
+                            <div style="background: var(--bg-color); border: 1px solid var(--main-color); padding: 1.2rem; border-radius: 12px; text-align: center; box-shadow: var(--shadow-soft);">
+                                <img src="${friend.avatar}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid var(--main-color); margin-bottom: 0.4rem;">
+                                <h5 style="color: var(--text-dark); font-size: 1rem;">${friend.name}</h5>
+                                <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">${friend.role}</span>
+                                <div style="font-size: 3rem; margin: 0.5rem 0;">${plant}</div>
+                                <span style="font-size: 0.85rem; color: var(--text-dark); font-weight: bold; display: block;">${plantTitle}</span>
+                                <span style="font-size: 0.8rem; color: #D63031; font-weight: bold; margin-top: 0.4rem; display: block;">⭐ ${pts} نقطة</span>
                             </div>
                         `;
                     }
@@ -816,6 +890,115 @@
         let totalDailySeconds = 0;
         let sessionHistory = [];
         let currentActiveDomainForVideo = 'nursing';
+
+        const prayersList = ['الفجر', 'الضحى', 'الظهر', 'العصر', 'المغرب', 'العشاء', 'قيام الليل'];
+        const prayerTasks = {
+            nursing: { 'الفجر': [], 'الضحى': [], 'الظهر': [], 'العصر': [], 'المغرب': [], 'العشاء': [], 'قيام الليل': [] },
+            dentistry: { 'الفجر': [], 'الضحى': [], 'الظهر': [], 'العصر': [], 'المغرب': [], 'العشاء': [], 'قيام الليل': [] },
+            architecture: { 'الفجر': [], 'الضحى': [], 'الظهر': [], 'العصر': [], 'المغرب': [], 'العشاء': [], 'قيام الليل': [] }
+        };
+
+        let userExams = {
+            sara: [],
+            alaa: [],
+            razan: []
+        };
+
+        // نظام توليد الأصوات التنبيهية بالـ Web Audio API (بدون الحاجة لملفات خارجية)
+        function playAlarmSound(type) {
+            try {
+                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                if (type === 'bell') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.5);
+                } else if (type === 'chime') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, audioCtx.currentTime); // C5
+                    osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.2); // E5
+                    osc.frequency.setValueAtTime(783.99, audioCtx.currentTime + 0.4); // G5
+                    gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 1.2);
+                } else { // beep (default)
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.8);
+                }
+            } catch(e) {
+                console.log("Audio not supported or blocked", e);
+            }
+        }
+
+        window.changeAlarmSound = function(domain, soundType) {
+            pomodoroTimers[domain].alarmSound = soundType;
+            playAlarmSound(soundType); // معاينة الصوت فوراً عند الاختيار
+        }
+
+        window.addExamForUser = function(userKey) {
+            const input = document.getElementById(`examInput-${userKey}`);
+            const dateInput = document.getElementById(`examDate-${userKey}`);
+            if(!input || !input.value.trim() || !dateInput || !dateInput.value) {
+                alert('⚠️ من فضلك ادخلي اسم الامتحان والتاريخ.');
+                return;
+            }
+            userExams[userKey].push({ title: input.value.trim(), date: dateInput.value, done: false });
+            input.value = '';
+            dateInput.value = '';
+            saveAndRenderUserExams();
+        }
+
+        window.toggleUserExam = function(userKey, idx) {
+            userExams[userKey][idx].done = !userExams[userKey][idx].done;
+            saveAndRenderUserExams();
+        }
+
+        window.deleteUserExam = function(userKey, idx) {
+            userExams[userKey].splice(idx, 1);
+            saveAndRenderUserExams();
+        }
+
+        function saveAndRenderUserExams() {
+            localStorage.setItem('ras_users_exams_data', JSON.stringify(userExams));
+            renderUserExamsLists();
+        }
+
+        function renderUserExamsLists() {
+            ['sara', 'alaa', 'razan'].forEach(userKey => {
+                const container = document.getElementById(`examsList-${userKey}`);
+                if(!container) return;
+                const list = userExams[userKey] || [];
+                if(list.length === 0) {
+                    container.innerHTML = `<li style="color: var(--text-muted); font-size: 0.85rem; text-align:center;">لا توجد امتحانات مسجلة.</li>`;
+                    return;
+                }
+                container.innerHTML = '';
+                list.forEach((ex, idx) => {
+                    container.innerHTML += `
+                        <li class="task-item ${ex.done ? 'completed' : ''}">
+                            <div style="font-size: 0.85rem;"><strong>${ex.title}</strong><br><span style="color:var(--text-muted); font-size:0.75rem;">📅 ${ex.date}</span></div>
+                            <div style="display:flex; gap:0.4rem; align-items:center;">
+                                <input type="checkbox" ${ex.done ? 'checked' : ''} onchange="toggleUserExam('${userKey}', ${idx})">
+                                <button onclick="deleteUserExam('${userKey}', ${idx})" style="background:none; border:none; color:#D63031; cursor:pointer;">✕</button>
+                            </div>
+                        </li>
+                    `;
+                });
+            });
+        }
 
         window.switchGardenView = function(view) {
             const myView = document.getElementById('myGardenView');
@@ -881,6 +1064,12 @@
                 if(picker) picker.value = savedColor;
             }
 
+            const savedExamsData = localStorage.getItem('ras_users_exams_data');
+            if(savedExamsData) {
+                try { userExams = JSON.parse(savedExamsData); } catch(e){}
+            }
+            renderUserExamsLists();
+
             ['nursing', 'dentistry', 'architecture'].forEach(domain => {
                 if(localStorage.getItem(`ras_quick_notes_${domain}`)) {
                     document.getElementById(`quickNotesArea-${domain}`).value = localStorage.getItem(`ras_quick_notes_${domain}`);
@@ -895,10 +1084,97 @@
                         if(el) el.value = savedPlan;
                     }
                 }
+                
+                const savedPrayers = localStorage.getItem(`ras_prayer_tasks_${domain}`);
+                if(savedPrayers) {
+                    try { prayerTasks[domain] = JSON.parse(savedPrayers); } catch(e){}
+                }
+                renderPrayersContainer(domain);
             });
 
             loadAchievementsDisplay();
         });
+
+        function renderPrayersContainer(domain) {
+            const container = document.getElementById(`${domain}PrayersContainer`);
+            if(!container) return;
+            container.innerHTML = '';
+
+            prayersList.forEach(prayer => {
+                let tasksHtml = '';
+                const list = prayerTasks[domain][prayer] || [];
+                
+                list.forEach((t, idx) => {
+                    tasksHtml += `
+                        <li class="task-item ${t.done ? 'completed' : ''}">
+                            <div style="display:flex; flex-direction:column;">
+                                <span>${t.text}</span>
+                                <span style="font-size:0.75rem; color:var(--text-muted);">⏱️ الوقت المتوقع: ${t.timeNeeded || 'غير محدد'}</span>
+                            </div>
+                            <div style="display:flex; gap:0.5rem; align-items:center;">
+                                <input type="checkbox" ${t.done ? 'checked' : ''} onchange="togglePrayerTask('${domain}', '${prayer}', ${idx})">
+                                <button onclick="deletePrayerTask('${domain}', '${prayer}', ${idx})" style="background:none; border:none; color:#D63031; cursor:pointer; font-size:0.9rem;">✕</button>
+                            </div>
+                        </li>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="prayer-section-box">
+                        <h4>🌅 وقت ${prayer}</h4>
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+                            <input type="text" id="${domain}-prayer-input-${prayer}" class="input-style" placeholder="اكتبي المهمة..." style="flex: 2;">
+                            <input type="text" id="${domain}-prayer-time-${prayer}" class="input-style" placeholder="الوقت (مثال: 30 دقيقة)" style="flex: 1; min-width: 130px;">
+                            <button class="btn-action" style="background:var(--main-color); color:var(--text-dark);" onclick="addPrayerTask('${domain}', '${prayer}')">إضافة</button>
+                        </div>
+                        <ul class="task-list" style="margin-top:0.4rem;">${tasksHtml}</ul>
+                    </div>
+                `;
+            });
+        }
+
+        window.addPrayerTask = function(domain, prayer) {
+            const input = document.getElementById(`${domain}-prayer-input-${prayer}`);
+            const timeInput = document.getElementById(`${domain}-prayer-time-${prayer}`);
+            if(!input || !input.value.trim()) return;
+            
+            prayerTasks[domain][prayer].push({ 
+                text: input.value.trim(), 
+                timeNeeded: timeInput ? timeInput.value.trim() : '', 
+                done: false 
+            });
+            
+            input.value = '';
+            if(timeInput) timeInput.value = '';
+            saveAndRenderPrayers(domain);
+        }
+
+        window.togglePrayerTask = function(domain, prayer, idx) {
+            prayerTasks[domain][prayer][idx].done = !prayerTasks[domain][prayer][idx].done;
+            saveAndRenderPrayers(domain);
+        }
+
+        window.deletePrayerTask = function(domain, prayer, idx) {
+            prayerTasks[domain][prayer].splice(idx, 1);
+            saveAndRenderPrayers(domain);
+        }
+
+        function saveAndRenderPrayers(domain) {
+            localStorage.setItem(`ras_prayer_tasks_${domain}`, JSON.stringify(prayerTasks[domain]));
+            renderPrayersContainer(domain);
+            updateTaskSelectDropdown(domain);
+        }
+
+        function updateTaskSelectDropdown(domain) {
+            const dropdown = document.getElementById(domain + 'TaskSelect');
+            if(!dropdown) return;
+            dropdown.innerHTML = `<option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option>`;
+            prayersList.forEach(prayer => {
+                (prayerTasks[domain][prayer] || []).forEach(t => {
+                    if(!t.done) dropdown.innerHTML += `<option value="${t.text}">[${prayer}] ${t.text} (${t.timeNeeded || ''})</option>`;
+                });
+            });
+        }
 
         function updateAchievements(totalPoints) {
             localStorage.setItem('ras_yearly_minutes', totalPoints);
@@ -1013,9 +1289,9 @@
         }
 
         const pomodoroTimers = {
-            nursing: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false },
-            dentistry: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false },
-            architecture: { workMins: 45, breakMins: 10, longBreakMins: 20, roundsTarget: 4, currentRound: 1, seconds: 45 * 60, mode: 'work', interval: null, running: false }
+            nursing: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
+            dentistry: { workMins: 25, breakMins: 5, longBreakMins: 15, roundsTarget: 4, currentRound: 1, seconds: 25 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' },
+            architecture: { workMins: 45, breakMins: 10, longBreakMins: 20, roundsTarget: 4, currentRound: 1, seconds: 45 * 60, mode: 'work', interval: null, running: false, alarmSound: 'beep' }
         };
 
         function applyCustomPomodoro(domain) {
@@ -1091,6 +1367,9 @@
                         p.running = false;
                         btn.innerText = 'بدء الجلسة';
                         if(vid) vid.pause();
+
+                        // تشغيل صوت التنبيه المختار عند انتهاء أي تايمر (تركيز أو بريك)
+                        playAlarmSound(p.alarmSound);
 
                         if (p.mode === 'work') {
                             logCompletedSession(domain, p.workMins, taskName);
@@ -1176,44 +1455,6 @@
             if (existingIdx > -1) habitsState[habitIdx].splice(existingIdx, 1);
             else habitsState[habitIdx].push(window.currentUser);
             document.getElementById(`habit-users-${habitIdx}`).innerHTML = renderHabitUsers(habitIdx);
-        }
-
-        const tasks = { nursing: [], dentistry: [], architecture: [] };
-        function addTask(domain) {
-            const textInput = document.getElementById(domain + 'TaskText');
-            const hoursInput = document.getElementById(domain + 'TaskHours');
-            if(!textInput || !textInput.value.trim()) return;
-            tasks[domain].push({ text: textInput.value, hours: hoursInput?.value || 1, done: false });
-            textInput.value = ''; if(hoursInput) hoursInput.value = '';
-            renderTasks(domain); updateTaskSelectDropdown(domain);
-        }
-
-        function renderTasks(domain) {
-            const list = document.getElementById(domain + 'TaskList');
-            if(!list) return;
-            list.innerHTML = '';
-            tasks[domain].forEach((t, i) => {
-                list.innerHTML += `
-                    <li class="task-item ${t.done ? 'completed' : ''}">
-                        <span>${t.text} (${t.hours} ساعة)</span>
-                        <input type="checkbox" ${t.done ? 'checked' : ''} onchange="toggleTask('${domain}', ${i})">
-                    </li>
-                `;
-            });
-        }
-
-        function updateTaskSelectDropdown(domain) {
-            const dropdown = document.getElementById(domain + 'TaskSelect');
-            if(!dropdown) return;
-            dropdown.innerHTML = `<option value="جلسة مذاكرة عامة">اختر المهمة للمذاكرة 📝</option>`;
-            tasks[domain].forEach((t) => {
-                if(!t.done) dropdown.innerHTML += `<option value="${t.text}">${t.text}</option>`;
-            });
-        }
-
-        function toggleTask(domain, i) { 
-            tasks[domain][i].done = !tasks[domain][i].done; 
-            renderTasks(domain); updateTaskSelectDropdown(domain);
         }
 
         function showPage(pageId, element) {
