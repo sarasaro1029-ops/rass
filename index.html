@@ -182,7 +182,7 @@
     <div id="authOverlay" class="overlay-screen">
         <div class="auth-card">
             <h2>يارب امتياز 🌸</h2>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">سجّلي دخولكِ بحساب Google الحقيقي لبدء التحدي.</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">سجّلي دخولكِ بحساب Google لبدء التحدي.</p>
             <button class="google-btn-single" id="loginBtn">
                 <i class="lni lni-google"></i>
                 <span>تسجيل الدخول بحساب Google</span>
@@ -706,7 +706,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, setPersistence, browserLocalPersistence, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, getDoc, onSnapshot, collection, addDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -721,6 +721,12 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+
+        // تثبيت الذاكرة محلياً لحل مشاكل التطبيقات والـ WebView
+        setPersistence(auth, browserLocalPersistence).catch((err) => {
+            console.log("Persistence error:", err);
+        });
+
         const db = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
@@ -1399,7 +1405,6 @@
             }
         }
 
-        // دالة جديدة لحساب الوقت المنقضي وحفظه كإنجاز فور الإيقاف المبكر
         window.finishAndSaveSession = function(domain) {
             const p = pomodoroTimers[domain];
             clearInterval(p.interval); 
@@ -1410,7 +1415,6 @@
             if(vid) { vid.pause(); vid.currentTime = 0; }
             document.getElementById('livePomodoroSection').style.display = 'none';
 
-            // حساب الثواني اللي ذاكرتها فعلياً
             const elapsedSeconds = p.initialSeconds - p.seconds;
             const elapsedMinutes = Math.floor(elapsedSeconds / 60);
 
@@ -1423,7 +1427,6 @@
                 alert('⚠️ لم تكملي وقتاً كافياً (أقل من دقيقة) لاحتسابه كإنجاز في هذا التايمر.');
             }
 
-            // إعادة ضبط التايمر للبداية
             p.seconds = p.initialSeconds;
             updatePomodoroUI(domain);
         }
